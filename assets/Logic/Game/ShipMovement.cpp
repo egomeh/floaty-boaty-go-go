@@ -57,6 +57,11 @@ void ShipMovement::Start()
     m_Velocity = 0.f;
 }
 
+void ShipMovement::OnDestroy()
+{
+    OnShipDestroyed.Invoke(owner);
+}
+
 void ShipMovement::SetTargetHeight(HeightLayer layer)
 {
     if (layer < Lowest)

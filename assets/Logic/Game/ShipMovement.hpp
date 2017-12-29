@@ -2,6 +2,8 @@
 
 #include "logic.hpp"
 
+#include "delegate.hpp"
+
 #include <random>
 
 enum HeightLayer
@@ -16,10 +18,13 @@ float HeightLayerToWorldHeight(HeightLayer layer);
 class ShipMovement : public LogicComponent
 {
 public:
+    Delegate<EntityHandle> OnShipDestroyed;
+
     ShipMovement();
 
     void Update() override;
     void Start() override;
+    void OnDestroy() override;
 
     void SetTargetHeight(HeightLayer layer);
     HeightLayer GetTargetHeight();

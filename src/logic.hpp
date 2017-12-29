@@ -128,6 +128,5 @@ private:
     std::unordered_map<std::size_t, LogicComponentFactoryBase*> m_FactoryTypeMap;
 
     std::unordered_map<ComponentHandle, LogicComponentPointer> m_Components;
-
     std::unordered_map<ComponentHandle, LogicComponentPointer> m_ComponentsNotYetStarted;
 };

@@ -8,6 +8,8 @@
 
 #include "input.hpp"
 
+#include "shipmovement.hpp"
+
 #include <random>
 
 ShipSpawner::ShipSpawner()
@@ -18,7 +20,7 @@ void ShipSpawner::Update()
 {
     m_SpawnTimer -= GetFrameContext().deltaTime / m_SpawnTime;
 
-    if (Input::KeyPressed('t')) // if (m_SpawnTimer < 0.0f)
+    if ((m_SpawnTimer < 0.0f || Input::KeyPressed('t')) && m_SpawnedShips.size() < m_MaxAirships)
     {
         EntityHandle spawnedShip = Instantiate(m_AirshipPrefab);
 
@@ -41,6 +43,15 @@ void ShipSpawner::Update()
         transform->SetLocalRotation(rotation);
 
         m_SpawnTimer = m_SpawnTime;
+
+        m_SpawnedShips.push_back(spawnedShip);
+
+        ShipMovement *shipMovement = m_EntityDatabase->GetComponent<ShipMovement>(spawnedShip);
+
+        if (shipMovement)
+        {
+            shipMovement->OnShipDestroyed.RegisterCallback(this, &ShipSpawner::NotifyShipDestroyed);
+        }
     }
 }
 
@@ -48,4 +59,18 @@ void ShipSpawner::Start()
 {
     m_AirshipPrefab = m_AssetDatabase->RequestAsset<Prefab>(m_AirshipPrefabName);
     m_SpawnTimer = 0;
+}
+
+void ShipSpawner::NotifyShipDestroyed(const EntityHandle &handle)
+{
+    if (m_SpawnedShips.size() == m_MaxAirships)
+    {
+        m_SpawnTimer = m_SpawnTime / 2.f;
+    }
+
+    m_SpawnedShips.erase(std::find(m_SpawnedShips.begin(), m_SpawnedShips.end(), handle));
+
+    ShipMovement *shipMovement = m_EntityDatabase->GetComponent<ShipMovement>(handle);
+
+    shipMovement->OnShipDestroyed.UnregisterListener(this);
 }
