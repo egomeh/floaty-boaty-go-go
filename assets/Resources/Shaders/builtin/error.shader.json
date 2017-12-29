@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "error",
+    "blend": "off",
+    "vertex": "error.vertex",
+    "fragment": "error.fragment"
+}

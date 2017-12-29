@@ -1,0 +1,45 @@
+{
+    "name": "menu",
+    "type": "scene",
+    "entities":
+    [
+    	{
+            "name": "cam",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "camera",
+                    "fov": 80.0,
+                    "nearPlane": 0.3,
+                    "farPlane": 1000.0,
+                    "claerFlag": "color",
+                    "clearColor": [0.0, 0.0, 0.0, 1.0]
+                }
+            ]
+        },
+        {
+        	"name": "overlay image",
+        	"components":
+        	[
+        		{
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 0, 0]
+                },
+        		{
+        			"type": "OverlayImage",
+        			"m_ImageName": "splash"
+        		},
+        		{
+        			"type": "ChangeScene",
+        			"m_TargetScene": "main"
+        		}
+        	]
+        }
+    ]
+}

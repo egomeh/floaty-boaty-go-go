@@ -1,0 +1,79 @@
+{
+    "name": "roamer_airship",
+    "type": "prefab",
+    "components":
+    [
+        {
+            "type": "transform",
+            "position": [0, 4, 0],
+            "rotation": [0, 0, 0]
+        },
+        {
+            "type": "ShipMovement",
+            "m_Speed": 4.0
+        },
+        {
+            "type": "sphere collider",
+            "radius": 1
+        },
+        {
+            "type": "AIControls"
+        }
+    ],
+    "entities":
+    [
+        {
+            "name": "model",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "TurbulenceWobble",
+                    "m_WobbleTime": 1.0
+                },
+                {
+                    "type": "MeshRandomizer",
+                    "m_MaterialName": "airship",
+                    "m_MesnNames[0]": "End_Nautilus",
+                    "m_MesnNames[1]": "End_Submarine",
+                    "m_MesnNames[2]": "End_Boat"
+                },
+                {
+                    "type": "MeshRandomizer",
+                    "m_MaterialName": "airship",
+                    "m_MesnNames[0]": "Front_Nautilus",
+                    "m_MesnNames[1]": "Front_Submarine",
+                    "m_MesnNames[2]": "Front_Boat"
+                },
+                {
+                    "type": "MeshRandomizer",
+                    "m_MaterialName": "airship",
+                    "m_MesnNames[0]": "House_Nautilus",
+                    "m_MesnNames[1]": "House_Submarine",
+                    "m_MesnNames[2]": "House_Boat"
+                },
+                {
+                    "type": "MeshRandomizer",
+                    "m_MaterialName": "airship",
+                    "m_MesnNames[0]": "Misc_Tires",
+                    "m_MesnNames[1]": "Misc_DoubleWing",
+                    "m_MesnNames[2]": ""
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Mid_section",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Balloon_HotAir",
+                    "material": "balloon"
+                }
+            ]
+        }
+    ]
+}

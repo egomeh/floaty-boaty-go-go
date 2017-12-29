@@ -1,0 +1,144 @@
+{
+	"name": "main",
+	"type": "scene",
+	"entities":
+    [
+        {
+            "name": "camera",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 6, -8],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "camera",
+                    "fov": 80.0,
+                    "nearPlane": 0.3,
+                    "farPlane": 1000.0,
+                    "cleartypestring": "cubemap",
+                    "skyboxasset": "skybox",
+                    "clearColor": [0.23, 0.75, 0.86, 1.0],
+                    "allowMsaa": true,
+                    "msaaSamples": 4
+                },
+                {
+                    "type": "FreeFlight",
+                    "m_Speed": 10.0
+                }
+            ]
+        },
+        {
+            "name": "player airship",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 5, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "PlayerControls",
+                    "m_TorpedoPrefabName": "torpedo",
+                    "m_TorpedoCooldown": 2
+                },
+                {
+                    "type": "ShipMovement",
+                    "m_Speed": 10.0,
+                    "m_Drag": 1.0
+                }
+            ],
+            "entities":
+            [
+                {
+                    "name": "model",
+                    "components":
+                    [
+                        {
+                            "type": "transform",
+                            "position": [0, 0, 0],
+                            "rotation": [0, 0, 0]
+                        },
+                        {
+                            "type": "TurbulenceWobble",
+                            "m_WobbleTime": 1.0
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "End_Nautilus",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Mid_section",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Front_Submarine",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "House_Submarine",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Misc_Tires",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Balloon_Zeppelin",
+                            "material": "balloon_player"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Water",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "Water",
+                    "m_MaterialName": "water"
+                }
+            ]
+        },
+        {
+            "name": "Airship spawner",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "ShipSpawner",
+                    "m_AirshipPrefabName": "roamer_airship",
+                    "m_SpawnTime": 3.5,
+                    "m_SpawnRadius": 100
+                }
+            ]
+        },
+        {
+            "name": "Island",
+            "components":
+            [
+                {
+                    "type": "Island",
+                    "material": "island"
+                }
+            ]
+        }
+    ]
+}

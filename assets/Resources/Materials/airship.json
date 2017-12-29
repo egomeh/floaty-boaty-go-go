@@ -1,0 +1,9 @@
+{
+    "type": "material",
+    "name": "airship",
+    "shader": "standard",
+    "uniforms":
+    {
+        "_Albedo": "TextureTile1"
+    }
+}

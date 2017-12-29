@@ -1,0 +1,140 @@
+{
+	"name": "RotatorTextScene",
+	"type": "scene",
+	"entities":
+    [
+        {
+            "name": "camera",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, -8],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "camera",
+                    "fov": 80.0,
+                    "nearPlane": 0.3,
+                    "farPlane": 100.0,
+                    "clearColor": [0.23, 0.75, 0.86, 1.0]
+                },
+                {
+                    "type": "FreeFlight",
+                    "m_Speed": 10.0
+                }
+            ]
+        },
+    	{
+    		"name": "airship",
+    		"components":
+    		[
+                {
+                    "type": "transform",
+                    "position": [0, 0, 0],
+                    "rotation": [0, 200, 30]
+                },
+                {
+                    "type": "Rotator",
+                    "speed": 5.0
+                },
+    			{
+    				"type": "mesh renderer",
+    				"mesh": "End_Nautilus",
+                    "material": "airship"
+    			},
+    			{
+    				"type": "mesh renderer",
+    				"mesh": "Mid_section",
+                    "material": "airship"
+    			},
+    			{
+    				"type": "mesh renderer",
+    				"mesh": "Front_Submarine",
+                    "material": "airship"
+    			},
+    			{
+    				"type": "mesh renderer",
+    				"mesh": "House_Submarine",
+                    "material": "airship"
+    			},
+    			{
+    				"type": "mesh renderer",
+    				"mesh": "Misc_DoubleWing",
+                    "material": "airship"
+    			}
+    		]
+    	},
+        {
+            "name": "airship2",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [-4, -0.6, 0],
+                    "rotation": [65, 30, 0]
+                },
+                {
+                    "type": "Rotator",
+                    "speed": 10.0
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "End_Boat",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Mid_section",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Front_Nautilus",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "House_Nautilus",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Misc_Tires",
+                    "material": "airship"
+                }
+            ]
+        },
+        {
+            "name": "airship3",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 1.7, 4],
+                    "rotation": [-35, -30, 25]
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "End_Nautilus",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Mid_section",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "Front_Boat",
+                    "material": "airship"
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "House_Boat",
+                    "material": "airship"
+                }
+            ]
+        }
+    ]
+}

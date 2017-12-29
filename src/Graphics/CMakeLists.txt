@@ -1,0 +1,26 @@
+set(GRAPHICS_SOURCE_FILES
+	mesh.hpp
+	mesh.cpp
+	light.hpp
+	light.cpp
+	camera.hpp
+	camera.cpp
+	shader.hpp
+	shader.cpp
+	texture.hpp
+	texture.cpp
+	graphics.hpp
+	graphics.cpp
+	renderer.hpp
+	renderer.cpp
+	material.hpp
+	material.cpp
+	meshrenderer.hpp
+	meshrenderer.cpp
+	graphicsutils.hpp
+	shaderpreprocessor.hpp
+	shaderpreprocessor.cpp
+)
+
+add_sources(${GRAPHICS_SOURCE_FILES})
+

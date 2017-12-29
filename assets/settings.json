@@ -1,0 +1,5 @@
+{
+	"type": "settings",
+	"name": "application-settings",
+	"start scene": "menu"
+}

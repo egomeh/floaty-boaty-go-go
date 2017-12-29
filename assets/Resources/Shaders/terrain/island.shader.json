@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "island",
+    "blend": "off",
+    "vertex": "island.vertex",
+    "fragment": "island.fragment"
+}

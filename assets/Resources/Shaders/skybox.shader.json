@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "skybox",
+    "blend": "off",
+    "vertex": "skybox.vertex",
+    "fragment": "skybox.fragment"
+}

@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "overlay",
+    "blend": "off",
+    "vertex": "overlay.vertex",
+    "fragment": "overlay.fragment"
+}

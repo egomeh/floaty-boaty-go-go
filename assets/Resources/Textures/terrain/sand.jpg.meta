@@ -1,0 +1,10 @@
+{
+    "anisotropic": 4, 
+    "filtermode": "bilinear", 
+    "flipy": true, 
+    "format": "RGBA32", 
+    "mipmaps": true, 
+    "name": "sand", 
+    "type": "texture", 
+    "wrapmode": "repeat"
+}

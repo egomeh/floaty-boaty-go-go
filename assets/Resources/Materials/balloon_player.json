@@ -1,0 +1,9 @@
+{
+    "type": "material",
+    "name": "balloon_player",
+    "shader": "standard",
+    "uniforms":
+    {
+        "_Albedo": "BalloonTexKlump"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "material",
+    "name": "island",
+    "shader": "island",
+    "uniforms":
+    {
+        "_Sand": "sand",
+        "_Grass": "grass"
+    }
+}

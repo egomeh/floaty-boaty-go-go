@@ -1,0 +1,9 @@
+{
+    "type": "material",
+    "name": "balloon",
+    "shader": "standard",
+    "uniforms":
+    {
+        "_Albedo": "BalloonTexGabe"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "standard",
+    "blend": "off",
+    "vertex": "standard.vertex",
+    "fragment": "standard.fragment"
+}

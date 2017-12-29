@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "water",
+    "blend": "off",
+    "vertex": "water.vertex",
+    "fragment": "water.fragment"
+}

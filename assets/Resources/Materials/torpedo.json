@@ -1,0 +1,9 @@
+{
+    "type": "material",
+    "name": "torpedo",
+    "shader": "standard",
+    "uniforms":
+    {
+        "_Albedo": "UVTexture"
+    }
+}

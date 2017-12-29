@@ -1,0 +1,30 @@
+set(ASSETS_SOURCE_FILES
+	assets.hpp
+	assets.cpp
+	textasset.hpp
+	textasset.cpp
+	meshasset.hpp
+	meshasset.cpp
+	sceneasset.hpp
+	sceneasset.cpp
+	shaderasset.hpp
+	shaderasset.cpp
+	textureasset.hpp
+	textureasset.cpp
+	cubemapasset.hpp
+	cubemapasset.cpp
+	materialasset.hpp
+	materialasset.cpp
+	cameracomponent.hpp
+	cameracomponent.cpp
+	transformcomponent.hpp
+	transformcomponent.cpp
+	meshrendercomponent.hpp
+	meshrendercomponent.cpp
+	spherecollidercomponent.hpp
+	spherecollidercomponent.cpp
+	assetdependencytracker.hpp
+	assetdependencytracker.cpp
+)
+
+add_sources(${ASSETS_SOURCE_FILES})

@@ -1,0 +1,10 @@
+{
+    "anisotropic": 1, 
+    "filtermode": "bilinear", 
+    "flipy": false, 
+    "format": "RGBA32", 
+    "mipmaps": true, 
+    "name": "splash", 
+    "type": "texture", 
+    "wrapmode": "clamp"
+}

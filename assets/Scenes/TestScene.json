@@ -1,0 +1,13 @@
+{
+    "name" : "test-scene",
+    "type": "scene",
+    "entities":
+    [
+    	{
+    		"name": "airship",
+    		"components":
+    		[
+    		]
+    	}
+    ]
+}

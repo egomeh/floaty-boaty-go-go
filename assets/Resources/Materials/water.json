@@ -1,0 +1,9 @@
+{
+    "type": "material",
+    "name": "water",
+    "shader": "water",
+    "uniforms":
+    {
+        "_Skybox": "skybox"
+    }
+}

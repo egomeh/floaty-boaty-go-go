@@ -1,0 +1,12 @@
+
+*.pyc
+assets/CMakeLists.txt
+assets/resource.h
+assets/resource.rc
+assets/assetmap.json
+lib/*
+
+bin/*
+build/*
+distribution/*
+

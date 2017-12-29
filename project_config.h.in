@@ -1,0 +1,9 @@
+#pragma once
+// Project configurations
+
+#define APP_NAME "@APP_NAME@"
+
+#define SHADER_DIR "@ShaderDir@"
+#define ASSETS_DIR "@AssetDir@"
+#define CONFIG_DIR "@ConfigDir@"
+#define SHADER_PACKAGE_FILE "@SHADER_PACKAGE_FILE@"

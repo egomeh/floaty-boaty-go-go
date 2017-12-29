@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "blit",
+    "blend": "off",
+    "vertex": "blit.vertex",
+    "fragment": "blit.fragment"
+}
