@@ -126,7 +126,8 @@
                     "type": "ShipSpawner",
                     "m_AirshipPrefabName": "roamer_airship",
                     "m_SpawnTime": 3.5,
-                    "m_SpawnRadius": 100
+                    "m_SpawnRadius": 100,
+                    "m_MaxAirships": 3
                 }
             ]
         },
