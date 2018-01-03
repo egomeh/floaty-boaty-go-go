@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "fxaa",
+    "blend": "off",
+    "vertex": "fxaa.vertex",
+    "fragment": "fxaa.fragment"
+}

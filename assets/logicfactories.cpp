@@ -129,6 +129,22 @@ Water *WaterLogicFactory::CreatePointer(const nlohmann::json &serializedComponen
     return component;
 }
 
+FXAA *FXAALogicFactory::CreatePointer()
+{
+    return new FXAA();
+}
+
+FXAA *FXAALogicFactory::CreatePointer(const nlohmann::json &serializedComponent)
+{
+    FXAA* component = new FXAA();
+
+    JsonSerializer serializer(serializedComponent);
+
+    component->Deserialize(serializer);
+
+    return component;
+}
+
 PlayerControls *PlayerControlsLogicFactory::CreatePointer()
 {
     return new PlayerControls();
@@ -209,6 +225,22 @@ AIControls *AIControlsLogicFactory::CreatePointer(const nlohmann::json &serializ
     return component;
 }
 
+WeaponsController *WeaponsControllerLogicFactory::CreatePointer()
+{
+    return new WeaponsController();
+}
+
+WeaponsController *WeaponsControllerLogicFactory::CreatePointer(const nlohmann::json &serializedComponent)
+{
+    WeaponsController* component = new WeaponsController();
+
+    JsonSerializer serializer(serializedComponent);
+
+    component->Deserialize(serializer);
+
+    return component;
+}
+
 ShipSpawner *ShipSpawnerLogicFactory::CreatePointer()
 {
     return new ShipSpawner();
@@ -237,10 +269,12 @@ void RegisterLogicFactories(LogicSystem &logicSystem)
     logicSystem.RegisterFactory<PropellerRotator>("PropellerRotator", &g_LogicComponentFactories.m_PropellerRotatorLogicFactory);
     logicSystem.RegisterFactory<FreeFlight>("FreeFlight", &g_LogicComponentFactories.m_FreeFlightLogicFactory);
     logicSystem.RegisterFactory<Water>("Water", &g_LogicComponentFactories.m_WaterLogicFactory);
+    logicSystem.RegisterFactory<FXAA>("FXAA", &g_LogicComponentFactories.m_FXAALogicFactory);
     logicSystem.RegisterFactory<PlayerControls>("PlayerControls", &g_LogicComponentFactories.m_PlayerControlsLogicFactory);
     logicSystem.RegisterFactory<ShipMovement>("ShipMovement", &g_LogicComponentFactories.m_ShipMovementLogicFactory);
     logicSystem.RegisterFactory<Rotator>("Rotator", &g_LogicComponentFactories.m_RotatorLogicFactory);
     logicSystem.RegisterFactory<TurbulenceWobble>("TurbulenceWobble", &g_LogicComponentFactories.m_TurbulenceWobbleLogicFactory);
     logicSystem.RegisterFactory<AIControls>("AIControls", &g_LogicComponentFactories.m_AIControlsLogicFactory);
+    logicSystem.RegisterFactory<WeaponsController>("WeaponsController", &g_LogicComponentFactories.m_WeaponsControllerLogicFactory);
     logicSystem.RegisterFactory<ShipSpawner>("ShipSpawner", &g_LogicComponentFactories.m_ShipSpawnerLogicFactory);
 }

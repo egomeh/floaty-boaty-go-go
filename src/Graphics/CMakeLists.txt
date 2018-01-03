@@ -15,6 +15,8 @@ set(GRAPHICS_SOURCE_FILES
 	renderer.cpp
 	material.hpp
 	material.cpp
+	postprocess.hpp
+	postprocess.cpp
 	meshrenderer.hpp
 	meshrenderer.cpp
 	graphicsutils.hpp

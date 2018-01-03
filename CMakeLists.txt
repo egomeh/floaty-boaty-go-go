@@ -97,3 +97,8 @@ add_custom_target(
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/CreateNewLogicComponent.py
 )
 
+add_custom_target(
+    NewSourceFile
+    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/CreateNewSource.py
+)
+

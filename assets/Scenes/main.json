@@ -26,6 +26,9 @@
                 {
                     "type": "FreeFlight",
                     "m_Speed": 10.0
+                },
+                {
+                    "type": "FXAA"
                 }
             ]
         },

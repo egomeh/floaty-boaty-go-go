@@ -1,0 +1,8 @@
+{
+    "type": "material",
+    "name": "FXAA",
+    "shader": "fxaa",
+    "uniforms":
+    {
+    }
+}

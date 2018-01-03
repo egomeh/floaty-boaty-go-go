@@ -11,11 +11,13 @@
 #include "Logic/Effects/PropellerRotator.hpp"
 #include "Logic/Game/FreeFlight.hpp"
 #include "Logic/Environment/Water.hpp"
+#include "Logic/Effects/PostProcess/FXAA.hpp"
 #include "Logic/Game/PlayerControls.hpp"
 #include "Logic/Game/ShipMovement.hpp"
 #include "Logic/Effects/Rotator.hpp"
 #include "Logic/Effects/TurbulenceWobble.hpp"
 #include "Logic/Game/AIControls.hpp"
+#include "Logic/Game/WeaponsController.hpp"
 #include "Logic/Game/ShipSpawner.hpp"
 
 void RegisterLogicFactories(LogicSystem &logicSystem);
@@ -108,6 +110,17 @@ public:
     Water *CreatePointer(const nlohmann::json &serializedComponent) override;
 };
 
+class FXAALogicFactory : public LogicComponentFactory<FXAA>
+{
+public:
+    FXAALogicFactory() : LogicComponentFactory<FXAA>()
+    {
+    }
+
+    FXAA *CreatePointer() override;
+    FXAA *CreatePointer(const nlohmann::json &serializedComponent) override;
+};
+
 class PlayerControlsLogicFactory : public LogicComponentFactory<PlayerControls>
 {
 public:
@@ -163,6 +176,17 @@ public:
     AIControls *CreatePointer(const nlohmann::json &serializedComponent) override;
 };
 
+class WeaponsControllerLogicFactory : public LogicComponentFactory<WeaponsController>
+{
+public:
+    WeaponsControllerLogicFactory() : LogicComponentFactory<WeaponsController>()
+    {
+    }
+
+    WeaponsController *CreatePointer() override;
+    WeaponsController *CreatePointer(const nlohmann::json &serializedComponent) override;
+};
+
 class ShipSpawnerLogicFactory : public LogicComponentFactory<ShipSpawner>
 {
 public:
@@ -184,11 +208,13 @@ struct LogicComponentFactories
     PropellerRotatorLogicFactory m_PropellerRotatorLogicFactory;
     FreeFlightLogicFactory m_FreeFlightLogicFactory;
     WaterLogicFactory m_WaterLogicFactory;
+    FXAALogicFactory m_FXAALogicFactory;
     PlayerControlsLogicFactory m_PlayerControlsLogicFactory;
     ShipMovementLogicFactory m_ShipMovementLogicFactory;
     RotatorLogicFactory m_RotatorLogicFactory;
     TurbulenceWobbleLogicFactory m_TurbulenceWobbleLogicFactory;
     AIControlsLogicFactory m_AIControlsLogicFactory;
+    WeaponsControllerLogicFactory m_WeaponsControllerLogicFactory;
     ShipSpawnerLogicFactory m_ShipSpawnerLogicFactory;
 };
 

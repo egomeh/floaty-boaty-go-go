@@ -17,7 +17,10 @@ void PlayerControls::Update()
 
     FreeFlight *freeFlight = m_EntityDatabase->GetComponent<FreeFlight>(m_CameraHandle);
 
-    freeFlight->SetFreeeMovement(m_ControlsEnabled);
+    if (freeFlight)
+    {
+        freeFlight->SetFreeeMovement(m_ControlsEnabled);
+    }
 
     if (m_ControlsEnabled)
     {

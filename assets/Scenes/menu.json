@@ -4,7 +4,7 @@
     "entities":
     [
     	{
-            "name": "cam",
+            "name": "camera",
             "components":
             [
                 {
