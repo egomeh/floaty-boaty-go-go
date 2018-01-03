@@ -46,7 +46,17 @@ void MaterialAssetFactory::RefreshAsset(const std::string & name)
 
     std::string serializedMaterial = m_ResourceLoader->LoadFileAsText(path);
 
-    nlohmann::json materialJson = nlohmann::json::parse(serializedMaterial);
+    nlohmann::json materialJson;
+
+    try
+    {
+        materialJson = nlohmann::json::parse(serializedMaterial);
+    }
+    catch (std::exception &ex)
+    {
+        DebugLog(ex.what());
+        return;
+    }
 
     std::string shaderName = materialJson["shader"];
 
