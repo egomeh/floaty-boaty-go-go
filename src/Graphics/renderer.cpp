@@ -52,7 +52,6 @@ void OpenGLRenderer::SetViewPort(std::size_t width, std::size_t height)
     m_SecondTarget.Release();
 
     m_MainTarget = RenderTexture(m_Width, m_Height, 24);
-    m_MainTarget.SetMultiSamplingLevel(4);
     m_MainTarget.Create();
 
     m_SecondTarget = RenderTexture(m_Width, m_Height, 24);
@@ -181,17 +180,16 @@ void OpenGLRenderer::Render()
 
     // Do Post processing
 
-    EntityHandle cameraOwner = camera->owner;
-    std::vector<LogicComponent*> logicComponents;
+    RenderTexture *source = &m_MainTarget;
+    RenderTexture *target = &m_SecondTarget;
 
-    m_EntityDatabase->GetComponents<LogicComponent>(cameraOwner, logicComponents);
-
-    for (auto it = logicComponents.begin(); it != logicComponents.end(); ++it)
+    for (const PostProcess &postProcess : camera->postProcessHooks)
     {
-        
+        postProcess.logicComponent->OnRenderImage(source, target);
+        std::swap(source, target);
     }
 
-    Blit(&m_MainTarget, nullptr);
+    Blit(source, nullptr);
 }
 
 std::size_t OpenGLRenderer::GetHeight() const

@@ -222,6 +222,11 @@ std::string Application::ReadFile(std::string filePath)
     return std::string(it1, it2);
 }
 
+Application *Application::Instance()
+{
+    return g_ActiveApplication;
+}
+
 Application::Application(HINSTANCE hInstance)
     : m_Initialized(false),
     m_ClassRegistered(false),

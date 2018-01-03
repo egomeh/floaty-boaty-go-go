@@ -1,8 +1,11 @@
 #pragma once
 
+#include <vector>
+
 #include "ecs.hpp"
 #include "serialization/serialization.hpp"
 #include "assetdatabase.hpp"
+#include "postprocess.hpp"
 
 #include "Graphics/texture.hpp"
 
@@ -65,6 +68,8 @@ public:
     glm::vec4 clearColor;
     CameraClearType clearType;
     Cubemap *cubemapSkybox;
+
+    std::vector<PostProcess> postProcessHooks;
 
     // Quite ugly, but just to gets things going
     AssetDatabase *assetDatabase;

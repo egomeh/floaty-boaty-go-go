@@ -36,6 +36,7 @@ class Application
 {
 public:
     static std::string ReadFile(std::string filePath);
+    static Application *Instance();
 
     Application(HINSTANCE hInstance);
     ~Application();
