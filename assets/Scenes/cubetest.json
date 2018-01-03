@@ -1,0 +1,51 @@
+{
+	"name": "cubetest",
+	"type": "scene",
+	"entities":
+    [
+        {
+            "name": "camera",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [ 0, 0, -3 ],
+                    "rotation": [ 0, 0, 0 ]
+                },
+                {
+                    "type": "camera",
+                    "fov": 80.0,
+                    "nearPlane": 0.3,
+                    "farPlane": 100.0,
+                    "cleartypestring": "color",
+                    "clearColor": [ 0.34, 0.78, 0.9, 1.0 ],
+                    "allowMsaa": true,
+                    "msaaSamples": 4
+                },
+                {
+                    "type": "FXAA"
+                }
+            ]
+        },
+        {
+            "name": "Cube",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [ 0, 0, 0 ],
+                    "rotation": [ 0, 0, 0 ]
+                },
+                {
+                    "type": "mesh renderer",
+                    "mesh": "torpedo",
+                    "material": "torpedo"
+                },
+                {
+                    "type": "Rotator",
+                    "speed": 50
+                }
+            ]
+        }
+    ]
+}
