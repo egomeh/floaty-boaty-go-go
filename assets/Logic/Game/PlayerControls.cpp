@@ -30,7 +30,7 @@ void PlayerControls::Update()
     ShipMovement *shipMovement = GetComponent<ShipMovement>();
     Transform *transform = GetComponent<Transform>();
 
-    if (shipMovement != nullptr)
+    if (shipMovement)
     {
         shipMovement->SetThrottle(Input::KeyValue('w'));
         shipMovement->SetTurn(Input::KeyValue('a') - Input::KeyValue('d'));
