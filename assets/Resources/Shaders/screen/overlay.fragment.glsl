@@ -7,6 +7,8 @@ uniform vec4 _MainTex_TexelSize;
 
 uniform sampler2D _Image;
 
+uniform float _Transparency;
+
 void main()
 {
     color = texture(_Image, v_Texcoord);

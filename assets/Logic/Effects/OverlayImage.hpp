@@ -16,6 +16,8 @@ public:
     void Update() override;
     void Start() override;
 
+    void SetTransparency(float transparency);
+
     template<typename SerializerType>
     void Deserialize(SerializerType serializer)
     {
@@ -24,7 +26,7 @@ public:
 
 private:
     std::string m_ImageName;
-    
+
     std::shared_ptr<Material> m_Material;
     Mesh m_Mesh;
 };

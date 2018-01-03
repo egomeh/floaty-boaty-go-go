@@ -1,7 +1,8 @@
 {
     "type": "shader",
     "name": "overlay",
-    "blend": "off",
+    "blend": "alpha",
+    "renderqueue": "transparent",
     "vertex": "overlay.vertex",
     "fragment": "overlay.fragment"
 }

@@ -37,4 +37,18 @@ void OverlayImage::Start()
 
     meshRenderer->material = m_Material.get();
     meshRenderer->mesh = &m_Mesh;
+
+    meshRenderer->material->GetUniformContext().SetFloat(std::hash<std::string>()("_Transparency"), 1.0f);
+}
+
+void OverlayImage::SetTransparency(float transparency)
+{
+    MeshRenderComponent *meshRenderer = GetComponent<MeshRenderComponent>();
+
+    if (!meshRenderer)
+    {
+        return;
+    }
+
+    meshRenderer->material->GetUniformContext().SetFloat(std::hash<std::string>()("_Transparency"), transparency);
 }

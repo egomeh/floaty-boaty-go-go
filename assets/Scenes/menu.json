@@ -37,7 +37,8 @@
         		},
         		{
         			"type": "ChangeScene",
-        			"m_TargetScene": "main"
+        			"m_TargetScene": "main",
+                    "m_Time": 0
         		}
         	]
         }
