@@ -1,10 +1,10 @@
-layout(location = 0) in vec3 vp;
-layout(location = 1) in vec2 uv;
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 texcoord;
 
-out vec2 uvs;
+out vec2 v_Texcoord;
 
 void main()
 {
-    uvs = uv;
-    gl_Position = vec4(vp, 1.);
+    v_Texcoord = texcoord;
+    gl_Position = vec4(vertexPosition, 1.);
 }
