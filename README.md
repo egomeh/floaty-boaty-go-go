@@ -21,7 +21,7 @@ one single game or game type.
 
 ## Architecture
 
-At the core of the game an [ECS](ECS) patteren is applied. With this design.
+At the core of the game an [ECS](ECS) patteren is applied.
 With such a pattern, each entity is by itself only an id without any behavior
 or functionality. Different logic and presence of the entites are added
 via components. This way, entities can change what they are and what they
