@@ -7,9 +7,9 @@
 enum RenderQueue
 {
     Background = 0,
-    Transparent,
     Default,
     Opaque,
+    Transparent,
     Overlay,
     RenderQueueEnd, // Keep last
 };

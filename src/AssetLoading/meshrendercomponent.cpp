@@ -12,6 +12,7 @@ TypedComponentHandle MeshRenderLoader::LoadComponent(const nlohmann::json &seria
 
     meshRender->mesh = m_AssetDatabase->RequestAsset<Mesh>(meshName);
     meshRender->material = m_AssetDatabase->RequestAsset<Material>(materialName);
+    meshRender->renderQueue = meshRender->material->GetShader()->GetRenderQueue();
 
     TypedComponentHandle typedHandle;
 

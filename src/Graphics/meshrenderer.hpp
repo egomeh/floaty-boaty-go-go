@@ -9,7 +9,7 @@
 class MeshRenderComponent : public ComponentBase
 {
 public:
-    MeshRenderComponent();
+    MeshRenderComponent(ComponentHandle handle);
 
     Mesh *mesh;
     Material *material;
@@ -29,10 +29,14 @@ public:
 
     void DestroyComponent(ComponentHandle handle) override;
 
+    void EnsureComponentOrder();
+
 private:
+    void SwapInternalComponentLayout(std::size_t a, std::size_t b);
+
     void CorrectComponentPlacement(std::size_t id);
 
     std::vector<std::size_t> m_FreeComponentSlots;
     std::vector<int> m_ComponentMapping;
-    std::vector<MeshRenderComponent> m_ComponentsTemp;
+    std::vector<MeshRenderComponent> m_Components;
 };

@@ -12,4 +12,5 @@ uniform float _Transparency;
 void main()
 {
     color = texture(_Image, v_Texcoord);
+    color.a = _Transparency;
 }

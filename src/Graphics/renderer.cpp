@@ -115,18 +115,35 @@ void OpenGLRenderer::Render()
 
     std::size_t _Skybox = std::hash<std::string>()("_Skybox");
 
+    m_MeshRenderSystem.EnsureComponentOrder();
+
     std::vector<MeshRenderComponent> &renderers = m_MeshRenderSystem.GetComponents();
 
-    for (auto it = renderers.begin(); it != renderers.end(); ++it)
+    ShaderBlendMode currentBlendMode;
+
+    if (!renderers.empty())
     {
-        if (it->IsDeleted() || !it->IsActive())
+        currentBlendMode = renderers[0].material->GetShader()->GetBlendMode();
+        SetDrawBlendMode(currentBlendMode);
+    }
+
+    // Draw opaque geometry
+    auto renderIterator = renderers.begin();
+    for (; renderIterator != renderers.end(); ++renderIterator)
+    {
+        if (renderIterator->IsDeleted() || !renderIterator->IsActive())
         {
             continue;
         }
 
+        if (renderIterator->renderQueue >= RenderQueue::Transparent)
+        {
+            break;
+        }
+
         ComponentHandle transformHandle;
 
-        m_EntityDatabase->FindComponentHandle<Transform>(it->owner, transformHandle);
+        m_EntityDatabase->FindComponentHandle<Transform>(renderIterator->owner, transformHandle);
 
         Transform *transform = m_TransformSystem->GetComponent(transformHandle);
 
@@ -136,7 +153,7 @@ void OpenGLRenderer::Render()
 
         glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
 
-        Material &material = *(it->material);
+        Material &material = *(renderIterator->material);
 
         material.GetUniformContext().SetMat4(_ObjectToClipspace, mvp);
         material.GetUniformContext().SetMat4(_WorldToCamera, view);
@@ -150,12 +167,13 @@ void OpenGLRenderer::Render()
 
         material.BindAndPrepareShader();
 
-        SetDefaultUniforms(*it->material);
+        SetDefaultUniforms(*renderIterator->material);
 
-        it->mesh->Bind();
-        it->mesh->Draw();
+        renderIterator->mesh->Bind();
+        renderIterator->mesh->Draw();
     }
 
+    // Draw cubemap if needed
     if (camera->clearType == CameraClearType::ClearCubemap)
     {
         glDepthFunc(GL_LEQUAL);
@@ -170,6 +188,58 @@ void OpenGLRenderer::Render()
 
         m_UnitCube.Bind();
         m_UnitCube.Draw();
+    }
+
+    // Enable transparency and render transparent geometry
+    glEnable(GL_DEPTH_TEST);
+    GL_ERROR_CHECK();
+
+    glDepthFunc(GL_LESS);
+    GL_ERROR_CHECK();
+
+    glEnable(GL_BLEND);
+    GL_ERROR_CHECK();
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GL_ERROR_CHECK();
+
+    for (; renderIterator != renderers.end(); ++renderIterator)
+    {
+        if (renderIterator->IsDeleted() || !renderIterator->IsActive())
+        {
+            continue;
+        }
+
+        ComponentHandle transformHandle;
+
+        m_EntityDatabase->FindComponentHandle<Transform>(renderIterator->owner, transformHandle);
+
+        Transform *transform = m_TransformSystem->GetComponent(transformHandle);
+
+        glm::mat4x4 model = transform->GetTransformMatrix();
+
+        glm::mat4x4 mvp = projection * view * model;
+
+        glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
+
+        Material &material = *(renderIterator->material);
+
+        material.GetUniformContext().SetMat4(_ObjectToClipspace, mvp);
+        material.GetUniformContext().SetMat4(_WorldToCamera, view);
+        material.GetUniformContext().SetMat4(_Perspective, projection);
+        material.GetUniformContext().SetMat4(_ObjectToWorld, model);
+        material.GetUniformContext().SetMat3(_NormalMatrix, glm::mat3(normalMatrix));
+
+        material.GetUniformContext().SetVector3(_CameraPosition, cameraPosition);
+
+        material.GetUniformContext().SetTexture(_Skybox, camera->cubemapSkybox);
+
+        material.BindAndPrepareShader();
+
+        SetDefaultUniforms(*renderIterator->material);
+
+        renderIterator->mesh->Bind();
+        renderIterator->mesh->Draw();
     }
 
     glCullFace(GL_BACK);
