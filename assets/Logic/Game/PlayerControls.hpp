@@ -12,6 +12,7 @@ class PlayerControls : public LogicComponent
 public:
     PlayerControls()
     {
+        m_ControlsEnabled = true;
     }
 
     void Update() override;

@@ -22,7 +22,7 @@ void PlayerControls::Update()
         freeFlight->SetFreeeMovement(m_ControlsEnabled);
     }
 
-    if (m_ControlsEnabled)
+    if (!m_ControlsEnabled)
     {
         return;
     }
@@ -65,7 +65,7 @@ void PlayerControls::Update()
 
 void PlayerControls::LateUpdate()
 {
-    if (m_ControlsEnabled)
+    if (!m_ControlsEnabled)
     {
         return;
     }
@@ -84,8 +84,6 @@ void PlayerControls::LateUpdate()
 
 void PlayerControls::Start()
 {
-    m_ControlsEnabled = true;
-
     m_CameraHandle = m_EntityDatabase->FindEntitiesByName("camera")[0];
 
     FreeFlight *cameraFreeFlight = m_EntityDatabase->GetComponent<FreeFlight>(m_CameraHandle);
