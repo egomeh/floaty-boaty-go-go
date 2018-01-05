@@ -15,6 +15,8 @@ set(GRAPHICS_SOURCE_FILES
 	renderer.cpp
 	material.hpp
 	material.cpp
+	openglstate.hpp
+	openglstate.cpp
 	postprocess.hpp
 	postprocess.cpp
 	meshrenderer.hpp

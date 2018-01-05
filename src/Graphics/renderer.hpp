@@ -16,6 +16,7 @@
 #include "meshrenderer.hpp"
 #include "transform.hpp"
 #include "camera.hpp"
+#include "openglstate.hpp"
 
 #define UNIFORM_NAME(uniformName) std::size_t uniformName = std::hash<std::string>()(#uniformName)
 
@@ -63,8 +64,11 @@ public:
     CameraSystem &GetCameraystem();
     MeshRenderSystem &GetMeshRenderSystem();
 
-private:    
+private:
     inline void GenerateBuiltinMeshes();
+
+    CommonUnifroms m_CommonUniforms;
+    OpenGLState m_OpenGLState;
 
     AssetDatabase *m_AssetDatabase;
 

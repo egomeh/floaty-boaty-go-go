@@ -26,6 +26,8 @@ void OpenGLRenderer::Initialize()
     GenerateBuiltinMeshes();
 
     m_CameraSystem.SetAssetDatabase(m_AssetDatabase);
+
+    m_OpenGLState.Initialize();
 }
 
 void OpenGLRenderer::SetEntityDatabase(EntityDatabase * entityDatabase)
@@ -63,26 +65,17 @@ void OpenGLRenderer::Render()
     glBindFramebuffer(GL_FRAMEBUFFER, m_MainTarget.GetFramebufferID());
     GL_ERROR_CHECK();
 
-    glEnable(GL_CULL_FACE);
-    GL_ERROR_CHECK();
-
-    glFrontFace(GL_CW);
-    GL_ERROR_CHECK();
-
-    glCullFace(GL_BACK);
-    GL_ERROR_CHECK();
-
     glViewport(0, 0, (GLsizei)m_Width, (GLsizei)m_Height);
     GL_ERROR_CHECK();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     GL_ERROR_CHECK();
 
-    glEnable(GL_DEPTH_TEST);
-    GL_ERROR_CHECK();
-
-    glDepthFunc(GL_LESS);
-    GL_ERROR_CHECK();
+    m_OpenGLState.EnableFaceCulling();
+    m_OpenGLState.SetFrontFaceRotation(FrontFaceRotation::Clockwise);
+    m_OpenGLState.SetFaceCullSide(FaceCullSide::Back);
+    m_OpenGLState.EnableDepthTest();
+    m_OpenGLState.SetDepthTestFunction(DepthTestFunction::Less);
 
     Camera *camera = m_CameraSystem.GetCamera();
 
@@ -110,9 +103,7 @@ void OpenGLRenderer::Render()
     std::size_t _WorldToCamera = std::hash<std::string>()("_WorldToCamera");
     std::size_t _Perspective = std::hash<std::string>()("_Perspective");
     std::size_t _NormalMatrix = std::hash<std::string>()("_NormalMatrix");
-
     std::size_t _CameraPosition = std::hash<std::string>()("_CameraPosition");
-
     std::size_t _Skybox = std::hash<std::string>()("_Skybox");
 
     m_MeshRenderSystem.EnsureComponentOrder();
@@ -136,6 +127,7 @@ void OpenGLRenderer::Render()
             continue;
         }
 
+        // When reaching the first transparent object 
         if (renderIterator->renderQueue >= RenderQueue::Transparent)
         {
             break;
@@ -176,8 +168,7 @@ void OpenGLRenderer::Render()
     // Draw cubemap if needed
     if (camera->clearType == CameraClearType::ClearCubemap)
     {
-        glDepthFunc(GL_LEQUAL);
-        GL_ERROR_CHECK();
+        m_OpenGLState.SetDepthTestFunction(DepthTestFunction::LessOrEqual);
 
         glm::mat4 skyboxView = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f) + cameraForwards, cameraUp);
 
@@ -191,15 +182,14 @@ void OpenGLRenderer::Render()
     }
 
     // Enable transparency and render transparent geometry
-    glEnable(GL_DEPTH_TEST);
-    GL_ERROR_CHECK();
+    m_OpenGLState.EnableDepthTest();
 
-    glDepthFunc(GL_LESS);
-    GL_ERROR_CHECK();
+    m_OpenGLState.SetDepthTestFunction(DepthTestFunction::Less);
 
     glEnable(GL_BLEND);
     GL_ERROR_CHECK();
 
+    // This should not be hard-coded, but should be derived from the material/shader in use
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GL_ERROR_CHECK();
 
@@ -242,11 +232,10 @@ void OpenGLRenderer::Render()
         renderIterator->mesh->Draw();
     }
 
-    glCullFace(GL_BACK);
-    GL_ERROR_CHECK();
+    glDisable(GL_BLEND);
 
-    glDisable(GL_DEPTH_TEST);
-    GL_ERROR_CHECK();
+    m_OpenGLState.SetFaceCullSide(FaceCullSide::Back);
+    m_OpenGLState.DisableDepthTest();
 
     // Do Post processing
 
