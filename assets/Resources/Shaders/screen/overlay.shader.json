@@ -3,6 +3,7 @@
     "name": "overlay",
     "blend": "alpha",
     "renderqueue": "transparent",
+    "writedepth":  false,
     "vertex": "overlay.vertex",
     "fragment": "overlay.fragment"
 }

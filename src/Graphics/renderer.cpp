@@ -110,15 +110,11 @@ void OpenGLRenderer::Render()
 
     std::vector<MeshRenderComponent> &renderers = m_MeshRenderSystem.GetComponents();
 
-    ShaderBlendMode currentBlendMode;
-
-    if (!renderers.empty())
-    {
-        currentBlendMode = renderers[0].material->GetShader()->GetBlendMode();
-        SetDrawBlendMode(currentBlendMode);
-    }
+    ShaderBlendMode currentBlendMode = ShaderBlendMode::Off;
+    SetDrawBlendMode(currentBlendMode);
 
     // Draw opaque geometry
+    m_OpenGLState.EnableDepthWrite();
     auto renderIterator = renderers.begin();
     for (; renderIterator != renderers.end(); ++renderIterator)
     {
@@ -227,6 +223,15 @@ void OpenGLRenderer::Render()
         material.BindAndPrepareShader();
 
         SetDefaultUniforms(*renderIterator->material);
+
+        if (material.GetShader()->DoesWriteDepth())
+        {
+            m_OpenGLState.EnableDepthWrite();
+        }
+        else
+        {
+            m_OpenGLState.DisableDepthWrite();
+        }
 
         renderIterator->mesh->Bind();
         renderIterator->mesh->Draw();

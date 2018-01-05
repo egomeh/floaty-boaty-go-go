@@ -12,7 +12,7 @@ in vec2 v_OffsetNorthEast;
 in vec2 v_OffsetSouthWest;
 in vec2 v_OffetSouthEast;
 
-//#define SKIP_AA
+// #define SKIP_AA
 
 void main()
 {

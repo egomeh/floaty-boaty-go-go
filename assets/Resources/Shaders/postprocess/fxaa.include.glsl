@@ -12,7 +12,7 @@ vec4 fxaa(sampler2D tex, vec4 texelSize, vec2 texcoord, vec2 offsetNorthWest, ve
     vec3 rgbSouthWest = texture(tex, offsetSouthWest).rgb;
     vec3 rgbSouthEast = texture(tex, offsetNorthEast).rgb;
 
-    vec3 luma = vec3(.299, .587, .114);
+    const vec3 luma = vec3(.299, .587, .114);
 
     float lumaCenter = dot(rgbCenter, luma);
     float lumaNorthWest = dot(rgbNorthWest, luma);

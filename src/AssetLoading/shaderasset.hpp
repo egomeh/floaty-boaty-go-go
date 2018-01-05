@@ -71,6 +71,8 @@ public:
         DESERIALIZE(vertex, serializer);
         DESERIALIZE(fragment, serializer);
 
+        DESERIALIZE(writedepth, serializer);
+
         m_BlendMode = StringToEnum(blend, blendModeWordMap, Off);
         m_RenderQueue = StringToEnum(renderqueue, renderQueueMap, Default);
     }
@@ -79,6 +81,7 @@ public:
     std::string fragment;
     ShaderBlendMode m_BlendMode;
     RenderQueue m_RenderQueue;
+    bool writedepth;
 };
 
 class ShaderAssetFactory : public AssetFactory<Shader>

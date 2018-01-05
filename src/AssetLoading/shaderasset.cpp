@@ -52,6 +52,7 @@ void ShaderAssetFactory::RefreshAsset(const std::string &name)
     ShaderProperties shaderProperties;
 
     shaderProperties.SetBlendMode(importData.m_BlendMode);
+    shaderProperties.SetWriteToDepth(importData.writedepth);
 
     GLSL *vertexFile = m_AssetDatabase->RequestAsset<GLSL>(importData.vertex);
     GLSL *fragmentFile = m_AssetDatabase->RequestAsset<GLSL>(importData.fragment);

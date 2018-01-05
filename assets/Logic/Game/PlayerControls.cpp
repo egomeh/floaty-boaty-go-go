@@ -19,7 +19,7 @@ void PlayerControls::Update()
 
     if (freeFlight)
     {
-        freeFlight->SetFreeeMovement(m_ControlsEnabled);
+        freeFlight->SetFreeeMovement(!m_ControlsEnabled);
     }
 
     if (!m_ControlsEnabled)

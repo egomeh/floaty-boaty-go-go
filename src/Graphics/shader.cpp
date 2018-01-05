@@ -27,6 +27,10 @@ RenderQueue Shader::GetRenderQueue() const
     return m_RenderQueue;
 }
 
+bool Shader::DoesWriteDepth() const
+{
+    return m_SaderProperties.DoesWriteToDepth();
+}
 
 bool Shader::Compile(std::string vertexSource, std::string fragmentSource)
 {
@@ -269,7 +273,7 @@ void Shader::DeleteShader()
     }
 }
 
-ShaderProperties::ShaderProperties() : m_BlendMode(Off)
+ShaderProperties::ShaderProperties() : m_BlendMode(Off), m_WriteDepth(false)
 {
 }
 
@@ -291,4 +295,14 @@ RenderQueue ShaderProperties::GetRenderQueue() const
 void ShaderProperties::SetRenderQueue(RenderQueue queue)
 {
     m_RenderQueue = queue;
+}
+
+bool ShaderProperties::DoesWriteToDepth() const
+{
+    return m_WriteDepth;
+}
+
+void ShaderProperties::SetWriteToDepth(bool writeToDepth)
+{
+    m_WriteDepth = writeToDepth;
 }

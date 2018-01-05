@@ -43,9 +43,13 @@ public:
 
     RenderQueue GetRenderQueue() const;
     void SetRenderQueue(RenderQueue queue);
+
+    bool DoesWriteToDepth() const;
+    void SetWriteToDepth(bool writeToDepth);
 private:
     ShaderBlendMode m_BlendMode;
     RenderQueue m_RenderQueue;
+    bool m_WriteDepth;
 };
 
 class Shader
@@ -58,6 +62,7 @@ public:
 
     ShaderBlendMode GetBlendMode() const;
     RenderQueue GetRenderQueue() const;
+    bool DoesWriteDepth() const;
     void DisownProgram();
 
     int GetUniformLocation(std::string uniform) const;
