@@ -19,7 +19,7 @@
                     "farPlane": 1000.0,
                     "cleartypestring": "cubemap",
                     "skyboxasset": "skybox",
-                    "clearColor": [0.23, 0.75, 0.86, 1.0],
+                    "clearColor": [0.0, 0.0, 0.0, 1.0],
                     "allowMsaa": true,
                     "msaaSamples": 4
                 },
