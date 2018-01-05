@@ -5,7 +5,7 @@
 
 void ChangeScene::Update()
 {
-    if (Input::KeyPressed(' '))
+    if (Input::KeyPressed(' ') && !m_IsDeleting)
     {
         SceneData *targetScene = m_AssetDatabase->RequestAsset<SceneData>(m_TargetScene);
 
