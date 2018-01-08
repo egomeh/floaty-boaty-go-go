@@ -40,6 +40,9 @@ void OpenGLState::Initialize()
 
     glDepthFunc(GL_LESS);
     GL_ERROR_CHECK();
+
+    // Current shader program is none
+    m_CurrentShaderProgram = -1;
 }
 
 void OpenGLState::EnableFaceCulling()
@@ -161,4 +164,19 @@ void OpenGLState::SetDepthTestFunction(DepthTestFunction depthTestFunction)
     GL_ERROR_CHECK();
 
     m_DepthTestFunction = depthTestFunction;
+}
+
+void OpenGLState::SetShaderProgram(const Shader &shader)
+{
+    int shaderId = static_cast<int>(shader.GetShaderId());
+
+    if (m_CurrentShaderProgram == shaderId)
+    {
+        return;
+    }
+
+    glUseProgram(shader.GetShaderId());
+    GL_ERROR_CHECK();
+
+    m_CurrentShaderProgram = shaderId;
 }

@@ -161,6 +161,7 @@ public:
     ~Material();
 
     UniformPropertySet &GetUniformContext();
+    const UniformPropertySet &GetUniformContext() const;
 
     void SetShader(const Shader *p_Shader);
     void SetBlendMode(ShaderBlendMode blendMode);
@@ -168,8 +169,6 @@ public:
     void UpdateShaderVariableMaps();
 
     const Shader *GetShader() const;
-
-    void BindAndPrepareShader();
 
 private:
     ShaderBlendMode m_ShaderBlendMode;

@@ -153,7 +153,7 @@ void OpenGLRenderer::Render()
 
         material.GetUniformContext().SetTexture(_Skybox, camera->cubemapSkybox);
 
-        material.BindAndPrepareShader();
+        BindAndPrepareShader(material);
 
         SetDefaultUniforms(*renderIterator->material);
 
@@ -171,7 +171,7 @@ void OpenGLRenderer::Render()
         m_SkyboxMaterial->GetUniformContext().SetMat4(_ObjectToClipspace, projection * skyboxView);
         m_SkyboxMaterial->GetUniformContext().SetTexture(_Skybox, camera->cubemapSkybox);
 
-        m_SkyboxMaterial->BindAndPrepareShader();
+        BindAndPrepareShader(*m_SkyboxMaterial.get());
 
         m_UnitCube.Bind();
         m_UnitCube.Draw();
@@ -220,7 +220,7 @@ void OpenGLRenderer::Render()
 
         material.GetUniformContext().SetTexture(_Skybox, camera->cubemapSkybox);
 
-        material.BindAndPrepareShader();
+        BindAndPrepareShader(material);
 
         SetDefaultUniforms(*renderIterator->material);
 
@@ -231,7 +231,7 @@ void OpenGLRenderer::Render()
         else
         {
             // Do fix this, it causes weird artifacts!
-            // m_OpenGLState.DisableDepthWrite();
+            m_OpenGLState.DisableDepthWrite();
         }
 
         renderIterator->mesh->Bind();
@@ -278,6 +278,75 @@ void OpenGLRenderer::SetDefaultUniforms(Material &material)
 
     material.GetUniformContext().SetFloat(aspectUniform, faspect);
     material.GetUniformContext().SetVector4(timeUniform, time);
+}
+
+void OpenGLRenderer::BindAndPrepareShader(const Material &material)
+{
+    m_OpenGLState.SetShaderProgram(*material.GetShader());
+
+    const UniformPropertySet &properties = material.GetUniformContext();
+
+    for (const auto &i : properties.GetInts())
+    {
+        glUniform1i(i.second.GetLocation(), i.second.GetValue());
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &f : properties.GetFloats())
+    {
+        glUniform1f(f.second.GetLocation(), f.second.GetValue());
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &vector : properties.GetVec2s())
+    {
+        glUniform2fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &vector : properties.GetVec3s())
+    {
+        glUniform3fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &vector : properties.GetVec4s())
+    {
+        glUniform4fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &matrix : properties.GetMat3s())
+    {
+        glUniformMatrix3fv(matrix.second.GetLocation(), 1, GL_FALSE, glm::value_ptr(matrix.second.GetValue()));
+        GL_ERROR_CHECK();
+    }
+
+    for (const auto &matrix : properties.GetMat4s())
+    {
+        glUniformMatrix4fv(matrix.second.GetLocation(), 1, GL_FALSE, glm::value_ptr(matrix.second.GetValue()));
+        GL_ERROR_CHECK();
+    }
+
+    GLint textureOffset = 0;
+    for (const auto &texture : properties.GetTextures())
+    {
+        if (!texture.second.GetValue())
+        {
+            continue;
+        }
+
+        glUniform1i(texture.second.GetLocation(), textureOffset);
+        GL_ERROR_CHECK();
+
+        glActiveTexture(GL_TEXTURE0 + textureOffset);
+        GL_ERROR_CHECK();
+
+        glBindTexture(texture.second.GetValue()->GetTextureType(), texture.second.GetValue()->GetTextureID());
+        GL_ERROR_CHECK();
+
+        ++textureOffset;
+    }
 }
 
 void OpenGLRenderer::SetTime(float time)
@@ -379,7 +448,7 @@ void OpenGLRenderer::Blit(Texture *source, RenderTexture *target, Material &mate
 
     SetDefaultUniforms(material);
 
-    material.BindAndPrepareShader();
+    BindAndPrepareShader(material);
 
     SetDrawBlendMode(material.GetShader()->GetBlendMode());
 

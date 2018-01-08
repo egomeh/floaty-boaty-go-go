@@ -53,6 +53,7 @@ public:
     void Blit(Texture *source, RenderTexture *target);
 
     void SetDefaultUniforms(Material &material);
+    void BindAndPrepareShader(const Material &material);
 
     void SetTime(float time);
     void SetTime(double time);

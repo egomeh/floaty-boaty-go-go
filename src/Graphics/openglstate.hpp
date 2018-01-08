@@ -40,9 +40,13 @@ public:
     void DisableDepthWrite();
     void SetDepthTestFunction(DepthTestFunction depthTestFunction);
 
+    void SetShaderProgram(const Shader &shader);
+
     void Initialize();
 
 private:
+    int m_CurrentShaderProgram;
+
     bool m_EnableFaceCulling;
     FaceCullSide m_FaceCullSide;
     FrontFaceRotation m_FrontFace;

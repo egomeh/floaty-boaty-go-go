@@ -17,6 +17,11 @@ UniformPropertySet &Material::GetUniformContext()
     return m_UniformProperties;
 }
 
+const UniformPropertySet & Material::GetUniformContext() const
+{
+    return m_UniformProperties;
+}
+
 void Material::SetShader(const Shader *p_Shader)
 {
     m_Shader = p_Shader;
@@ -35,76 +40,6 @@ void Material::UpdateShaderVariableMaps()
 const Shader *Material::GetShader() const
 {
     return m_Shader;
-}
-
-void Material::BindAndPrepareShader()
-{
-    glUseProgram(m_Shader->GetShaderId());
-    GL_ERROR_CHECK();
-
-    const UniformPropertySet &properties = m_UniformProperties;
-
-    for (const auto &i : properties.GetInts())
-    {
-        glUniform1i(i.second.GetLocation(), i.second.GetValue());
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &f : properties.GetFloats())
-    {
-        glUniform1f(f.second.GetLocation(), f.second.GetValue());
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &vector : properties.GetVec2s())
-    {
-        glUniform2fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &vector : properties.GetVec3s())
-    {
-        glUniform3fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &vector : properties.GetVec4s())
-    {
-        glUniform4fv(vector.second.GetLocation(), 1, glm::value_ptr(vector.second.GetValue()));
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &matrix : properties.GetMat3s())
-    {
-        glUniformMatrix3fv(matrix.second.GetLocation(), 1, GL_FALSE, glm::value_ptr(matrix.second.GetValue()));
-        GL_ERROR_CHECK();
-    }
-
-    for (const auto &matrix : properties.GetMat4s())
-    {
-        glUniformMatrix4fv(matrix.second.GetLocation(), 1, GL_FALSE, glm::value_ptr(matrix.second.GetValue()));
-        GL_ERROR_CHECK();
-    }
-
-    GLint textureOffset = 0;
-    for (const auto &texture : properties.GetTextures())
-    {
-        if (!texture.second.GetValue())
-        {
-            continue;
-        }
-
-        glUniform1i(texture.second.GetLocation(), textureOffset);
-        GL_ERROR_CHECK();
-
-        glActiveTexture(GL_TEXTURE0 + textureOffset);
-        GL_ERROR_CHECK();
-
-        glBindTexture(texture.second.GetValue()->GetTextureType(), texture.second.GetValue()->GetTextureID());
-        GL_ERROR_CHECK();
-
-        ++textureOffset;
-    }
 }
 
 UniformPropertySet::UniformPropertySet(std::vector<ShaderVariableInfo> shaderVariables)
