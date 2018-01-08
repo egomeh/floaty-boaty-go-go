@@ -73,11 +73,9 @@ inline void Transform::SetDirty()
 {
     m_Dirty = true;
 
-    auto childIterator = m_Children.begin();
-
-    for (; childIterator != m_Children.end(); ++childIterator)
+    for (const ComponentHandle childHandle : m_Children)
     {
-        Transform *child = m_TransformSystem->GetComponent(*childIterator);
+        Transform *child = m_TransformSystem->GetComponent(childHandle);
 
         child->SetDirty();
     }
