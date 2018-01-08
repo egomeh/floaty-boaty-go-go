@@ -3,6 +3,7 @@ from AssetMesh import *
 from AssetGLSL import *
 from AssetJSON import *
 from AssetLogic import *
+from AssetFont import *
 
 def GetAssetType(postfix):
     if postfix in Texture().acceptedFileExtensions:
@@ -15,10 +16,13 @@ def GetAssetType(postfix):
         return GLSL()
 
     if postfix in JSON().acceptedFileExtensions:
-    	return JSON()
+        return JSON()
 
     if postfix in Logic().acceptedFileExtensions:
-    	return Logic()
+        return Logic()
+
+    if postfix in Font().acceptedFileExtensions:
+        return Font()
 
 if __name__ == "__main__":
     pass
