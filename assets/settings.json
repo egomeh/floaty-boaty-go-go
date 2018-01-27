@@ -1,5 +1,6 @@
 {
 	"type": "settings",
 	"name": "application-settings",
-	"start scene": "menu"
+	"start scene": "menu",
+	"icon": "icon.ico"
 }
