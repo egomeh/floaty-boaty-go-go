@@ -1,0 +1,7 @@
+{
+    "type": "fonttexture",
+    "name": "default",
+    "source": "NBA Hawks",
+    "size": 1024,
+    "render": "raster"
+}
