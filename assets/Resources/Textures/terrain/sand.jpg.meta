@@ -1,5 +1,5 @@
 {
-    "anisotropic": 4, 
+    "anisotropic": 1, 
     "filtermode": "bilinear", 
     "flipy": true, 
     "format": "RGBA32", 

@@ -231,7 +231,7 @@ void OpenGLRenderer::Render()
         else
         {
             // Do fix this, it causes weird artifacts!
-            m_OpenGLState.DisableDepthWrite();
+            // m_OpenGLState.DisableDepthWrite();
         }
 
         renderIterator->mesh->Bind();

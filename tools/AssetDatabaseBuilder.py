@@ -263,10 +263,28 @@ def BuildResource(directory, assets):
 
     counter = 101
 
+    settingsFile = directory + "settings.json"
+
+    icon = None
+
+    if os.path.isfile(settingsFile):
+        with open(settingsFile) as settingsFileHandle:
+            settingsRawContent = settingsFileHandle.read()
+            settingsObject = json.loads(settingsRawContent)
+
+            if "icon" in settingsObject:
+                icon = settingsObject["icon"]
+
     headerDefines = "\n#define IDR_ASSET_MAP {0}\n".format(counter)
     resources = "#include \"resource.h\"\n\nIDR_ASSET_MAP RCDATA \"{0}\"".format("assetmap.json")
 
     counter += 1
+
+    if icon != None:
+        headerDefines += "\n#define IDR_ICON_1 {0}\n".format(counter)
+        resources += "\nIDI_ICON_1 ICON \"{0}\"\n".format(icon)
+
+        counter += 1
 
     for assetType in assets:
         for asset in assets[assetType]:
