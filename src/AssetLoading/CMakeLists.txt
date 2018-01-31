@@ -1,6 +1,8 @@
 set(ASSETS_SOURCE_FILES
 	assets.hpp
 	assets.cpp
+	fontasset.hpp
+	fontasset.cpp
 	textasset.hpp
 	textasset.cpp
 	meshasset.hpp

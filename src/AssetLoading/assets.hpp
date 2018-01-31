@@ -1,5 +1,6 @@
 #pragma once
 
+#include "fontasset.hpp"
 #include "assetdatabase.hpp"
 #include "textureasset.hpp"
 #include "cubemapasset.hpp"
@@ -17,6 +18,7 @@
 class AssetFactories
 {
 public:
+    FontAssetFactory m_FontAssetFactory;
     TextureAssetFactory m_TextureAssetFactory;
     CubemapAssetFactory m_CubemapAssetFactory;
     GlslAssetFactory m_GlslAssetFactory;

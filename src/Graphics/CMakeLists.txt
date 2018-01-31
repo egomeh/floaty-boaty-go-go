@@ -1,6 +1,8 @@
 set(GRAPHICS_SOURCE_FILES
 	mesh.hpp
 	mesh.cpp
+	font.hpp
+	font.cpp
 	light.hpp
 	light.cpp
 	camera.hpp
