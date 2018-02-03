@@ -71,6 +71,8 @@ void OpenGLRenderer::Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     GL_ERROR_CHECK();
 
+    glDisable(GL_BLEND);
+
     m_OpenGLState.EnableFaceCulling();
     m_OpenGLState.SetFrontFaceRotation(FrontFaceRotation::Clockwise);
     m_OpenGLState.SetFaceCullSide(FaceCullSide::Back);
@@ -189,6 +191,9 @@ void OpenGLRenderer::Render()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GL_ERROR_CHECK();
 
+    // Disable depth buffer writing for transparent objects
+    m_OpenGLState.DisableDepthTest();
+
     for (; renderIterator != renderers.end(); ++renderIterator)
     {
         if (renderIterator->IsDeleted() || !renderIterator->IsActive())
@@ -223,16 +228,6 @@ void OpenGLRenderer::Render()
         BindAndPrepareShader(material);
 
         SetDefaultUniforms(*renderIterator->material);
-
-        if (material.GetShader()->DoesWriteDepth())
-        {
-            m_OpenGLState.EnableDepthWrite();
-        }
-        else
-        {
-            // Do fix this, it causes weird artifacts!
-            // m_OpenGLState.DisableDepthWrite();
-        }
 
         renderIterator->mesh->Bind();
         renderIterator->mesh->Draw();
