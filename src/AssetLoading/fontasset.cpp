@@ -28,4 +28,25 @@ Font *FontAssetFactory::GetAsset(const std::string &name)
 
 void FontAssetFactory::RefreshAsset(const std::string &name)
 {
+    auto asset = m_LoadedAssets.find(name);
+
+    if (asset == m_LoadedAssets.end())
+    {
+        return;
+    }
+
+    nlohmann::json &fontAsset = (*m_AssetSubMap)[name];
+
+    std::string path = fontAsset["path"];
+
+    if (m_AssetDependencyTracker)
+    {
+        m_AssetDependencyTracker->InsertDependency<Font>(name, path);
+    }
+
+    std::vector<uint8_t> rawFontData;
+
+    m_ResourceLoader->LoadFileContent(path, rawFontData);
+
+    asset->second.get()->SetRawFontData(rawFontData);
 }

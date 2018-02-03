@@ -16,11 +16,11 @@ class Font
 public:
     Font();
 
-    void SetRawFontData(const std::vector<char> fontData);
-    const std::vector<char> &GetRawFontData() const;
+    void SetRawFontData(const std::vector<uint8_t> fontData);
+    const std::vector<uint8_t> &GetRawFontData() const;
 
 private:
-    std::vector<char> m_RawFontData;
+    std::vector<uint8_t> m_RawFontData;
 };
 
 class FontTexture
@@ -28,7 +28,7 @@ class FontTexture
 public:
     FontTexture();
     
-    void GenerateFontTexture(char *fontBuffer, unsigned int size, FontTextureType renderType);
+    void GenerateFontTexture(Font *fontBuffer, unsigned int size, FontTextureType renderType);
 
 private:
     Texture2D *m_FontTexture;
