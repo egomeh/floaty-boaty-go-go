@@ -500,7 +500,7 @@ void Application::Initialize()
     m_Assetdatabase.RegisterAssetType<SceneData>("scene", &m_AssetFactories.m_SceneAssetFactory);
     m_Assetdatabase.RegisterAssetType<Prefab>("prefab", &m_AssetFactories.m_PrefabAssetFactory);
     m_Assetdatabase.RegisterAssetType<Texture>("texture", &m_AssetFactories.m_TextureAssetFactory);
-    m_Assetdatabase.RegisterAssetType<Font>("font", &m_AssetFactories.m_FontAssetFactory);
+    m_Assetdatabase.RegisterAssetType<Font>("ttf", &m_AssetFactories.m_FontAssetFactory);
     m_Assetdatabase.RegisterAssetType<Cubemap>("cubemap", &m_AssetFactories.m_CubemapAssetFactory);
     m_Assetdatabase.RegisterAssetType<GLSL>("glsl", &m_AssetFactories.m_GlslAssetFactory);
     m_Assetdatabase.RegisterAssetType<Shader>("shader", &m_AssetFactories.m_ShaderAssetFactory);
