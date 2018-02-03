@@ -23,3 +23,13 @@ public:
 private:
     std::unordered_map<std::string, std::shared_ptr<Font>> m_LoadedAssets;
 };
+
+class FontTextureAssetFactory : public AssetFactory<FontTexture>
+{
+public:
+    FontTexture *GetAsset(const std::string &name) override;
+    void RefreshAsset(const std::string &name) override;
+
+private:
+    std::unordered_map<std::string, std::shared_ptr<FontTexture>> m_LoadedAssets;
+};

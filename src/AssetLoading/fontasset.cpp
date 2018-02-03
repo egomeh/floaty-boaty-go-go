@@ -50,3 +50,29 @@ void FontAssetFactory::RefreshAsset(const std::string &name)
 
     asset->second.get()->SetRawFontData(rawFontData);
 }
+
+FontTexture *FontTextureAssetFactory::GetAsset(const std::string &name)
+{
+    if (m_LoadedAssets.count(name))
+    {
+        return m_LoadedAssets[name].get();
+    }
+
+    std::shared_ptr<FontTexture> texture = std::make_shared<FontTexture>();
+
+    m_LoadedAssets.insert(std::make_pair(name, texture));
+
+    RefreshAsset(name);
+
+    return texture.get();
+}
+
+void FontTextureAssetFactory::RefreshAsset(const std::string &name)
+{
+    auto asset = m_LoadedAssets.find(name);
+
+    if (asset == m_LoadedAssets.end())
+    {
+        return;
+    }
+}
