@@ -102,6 +102,12 @@ void FontTextureAssetFactory::RefreshAsset(const std::string &name)
 
     unsigned int size = fontTextureJson["size"];
     std::string ttfSource = fontTextureJson["source"];
+    float fontSize = 16.f;
+
+    if (fontTextureJson.count("fontsize") != 0)
+    {
+        fontSize = fontTextureJson["fontsize"];
+    }
 
     // Insert a dependency on the ttf source
     if (m_AssetDependencyTracker)
@@ -120,5 +126,5 @@ void FontTextureAssetFactory::RefreshAsset(const std::string &name)
 
     FontTexture *storedTexture = (*asset).second.get();
 
-    storedTexture->GenerateFontTexture(ttf, size, FontTextureType::Raster);
+    storedTexture->GenerateFontTexture(ttf, size, fontSize, FontTextureType::Raster);
 }

@@ -11,7 +11,8 @@ FontTexture::FontTexture()
     m_FontTexture = new Texture2D(1, 1);
 }
 
-void FontTexture::GenerateFontTexture(Font *fontBuffer, unsigned int size, FontTextureType renderType)
+// Heavily inspired by https://github.com/0xc0dec/stb-truetype-examples/blob/master/Example1.cpp
+void FontTexture::GenerateFontTexture(Font *font, unsigned int size, float fontSize, FontTextureType renderType)
 {
     m_FontTexture->Delete();
 
@@ -20,13 +21,39 @@ void FontTexture::GenerateFontTexture(Font *fontBuffer, unsigned int size, FontT
     m_FontTexture->GenerateMipmaps(true);
     m_FontTexture->SetFilterMode(TextureFilterMode::Bilinear);
     m_FontTexture->SetAnisootropicFiltering(1);
-    
+
     // Allocate the host pixel buffer
+    std::unique_ptr<uint8_t[]> atlasData = std::make_unique<uint8_t[]>(size * size);
+
+    uint32_t character = ' ';
+    uint32_t numberOfChars = '~' - ' ';
+    //stbtt_aligned_quad quad;
+
+    std::unique_ptr<stbtt_packedchar[]> charInfo = std::make_unique<stbtt_packedchar[]>(numberOfChars);
+    stbtt_pack_context context;
+
+    // For now assume that this will not fail
+    // TODO: Make check and indicate with error texture
+    int packBeginSuccess = stbtt_PackBegin(&context, atlasData.get(), size, size, 0, 1, nullptr);
+
+    stbtt_PackSetOversampling(&context, 2, 2);
+
+    // For now assume  that this will not fail
+    // TODO: Make check and indicate with error texture
+    const unsigned char *fontData = font->GetRawFontData().data();
+    uint32_t firstChar = ' ';
+    stbtt_PackFontRange(&context, fontData, 0, fontSize, firstChar, numberOfChars, charInfo.get());
+
+    stbtt_PackEnd(&context);
+
     std::vector<glm::vec4> pixels = std::vector<glm::vec4>(size * size);
 
+    unsigned int iterator = 0;
     for (glm::vec4 &pixel : pixels)
     {
-        pixel = glm::vec4(.75f, .5f, .5f, 1.f);
+        const float pixelValue = static_cast<float>(atlasData.get()[iterator] / 255.f);
+        pixel = glm::vec4(pixelValue, pixelValue, pixelValue, 1.f);
+        ++iterator;
     }
 
     // Set pixels, generate the texture and discard data on

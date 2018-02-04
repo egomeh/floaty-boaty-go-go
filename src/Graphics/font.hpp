@@ -28,7 +28,7 @@ class FontTexture
 public:
     FontTexture();
     
-    void GenerateFontTexture(Font *fontBuffer, unsigned int size, FontTextureType renderType);
+    void GenerateFontTexture(Font *fontBuffer, unsigned int size, float fontSize, FontTextureType renderType);
     Texture2D *GetTexture() const;
 
 private:

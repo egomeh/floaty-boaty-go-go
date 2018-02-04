@@ -1,7 +1,8 @@
 {
     "type": "fonttexture",
     "name": "default",
-    "source": "NBA_Hawks",
+    "source": "OpenSans-Regular",
     "size": 1024,
+    "fontsize": 96.0,
     "render": "raster"
 }
