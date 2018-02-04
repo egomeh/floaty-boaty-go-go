@@ -75,4 +75,50 @@ void FontTextureAssetFactory::RefreshAsset(const std::string &name)
     {
         return;
     }
+
+    nlohmann::json &fontTextureAsset = (*m_AssetSubMap)[name];
+
+    std::string path = fontTextureAsset["path"];
+
+    // If asset dependency tracker is present, add file dependency
+    if (m_AssetDependencyTracker)
+    {
+        m_AssetDependencyTracker->InsertDependency<FontTexture>(path, name);
+    }
+
+    std::string serializedFontTexture = m_ResourceLoader->LoadFileAsText(path);
+
+    nlohmann::json fontTextureJson;
+
+    try
+    {
+        fontTextureJson = nlohmann::json::parse(serializedFontTexture);
+    }
+    catch (std::exception &ex)
+    {
+        DebugLog(ex.what());
+        return;
+    }
+
+    unsigned int size = fontTextureJson["size"];
+    std::string ttfSource = fontTextureJson["source"];
+
+    // Insert a dependency on the ttf source
+    if (m_AssetDependencyTracker)
+    {
+        AssetIdentifier fontSourceIdentifier(GetTypeID<Font>(), ttfSource);
+        m_AssetDependencyTracker->InsertDependency<FontTexture>(name, fontSourceIdentifier);
+    }
+
+    Font *ttf = m_AssetDatabase->RequestAsset<Font>(ttfSource);
+
+    if (!ttf)
+    {
+        DebugLog("Source ttf not found");
+        return;
+    }
+
+    FontTexture *storedTexture = (*asset).second.get();
+
+    storedTexture->GenerateFontTexture(ttf, size, FontTextureType::Raster);
 }

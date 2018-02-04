@@ -501,6 +501,7 @@ void Application::Initialize()
     m_Assetdatabase.RegisterAssetType<Prefab>("prefab", &m_AssetFactories.m_PrefabAssetFactory);
     m_Assetdatabase.RegisterAssetType<Texture>("texture", &m_AssetFactories.m_TextureAssetFactory);
     m_Assetdatabase.RegisterAssetType<Font>("ttf", &m_AssetFactories.m_FontAssetFactory);
+    m_Assetdatabase.RegisterAssetType<FontTexture>("fonttexture", &m_AssetFactories.m_FontTextureAssetFactory);
     m_Assetdatabase.RegisterAssetType<Cubemap>("cubemap", &m_AssetFactories.m_CubemapAssetFactory);
     m_Assetdatabase.RegisterAssetType<GLSL>("glsl", &m_AssetFactories.m_GlslAssetFactory);
     m_Assetdatabase.RegisterAssetType<Shader>("shader", &m_AssetFactories.m_ShaderAssetFactory);
@@ -513,6 +514,7 @@ void Application::Initialize()
     m_AssetFactories.m_SceneAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
     m_AssetFactories.m_TextureAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
     m_AssetFactories.m_FontAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
+    m_AssetFactories.m_FontTextureAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
     m_AssetFactories.m_CubemapAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
     m_AssetFactories.m_GlslAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);
     m_AssetFactories.m_ShaderAssetFactory.SetAssetDependencyTracker(&m_AssetDependencyTracker);

@@ -29,6 +29,7 @@ public:
     FontTexture();
     
     void GenerateFontTexture(Font *fontBuffer, unsigned int size, FontTextureType renderType);
+    Texture2D *GetTexture() const;
 
 private:
     Texture2D *m_FontTexture;

@@ -19,6 +19,7 @@ class AssetFactories
 {
 public:
     FontAssetFactory m_FontAssetFactory;
+    FontTextureAssetFactory m_FontTextureAssetFactory;
     TextureAssetFactory m_TextureAssetFactory;
     CubemapAssetFactory m_CubemapAssetFactory;
     GlslAssetFactory m_GlslAssetFactory;

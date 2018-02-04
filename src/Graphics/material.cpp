@@ -178,7 +178,7 @@ void UniformPropertySet::SetTexture(std::size_t nameHash, Texture *value)
     }
 }
 
-void TextureUniformProperty::SetValue(Texture * value)
+void TextureUniformProperty::SetValue(Texture *value)
 {
     m_Value = value;
 }
