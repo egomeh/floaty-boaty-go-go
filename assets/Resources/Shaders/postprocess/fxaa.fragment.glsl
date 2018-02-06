@@ -17,9 +17,9 @@ in vec2 v_OffetSouthEast;
 void main()
 {
 #ifndef SKIP_AA
-	color = fxaa(_MainTex, _MainTex_TexelSize, v_Texcoord, v_OffsetNorthWest, v_OffsetNorthEast, v_OffsetSouthWest, v_OffetSouthEast);
+    color = fxaa(_MainTex, _MainTex_TexelSize, v_Texcoord, v_OffsetNorthWest, v_OffsetNorthEast, v_OffsetSouthWest, v_OffetSouthEast);
 #else
-	color = texture(_MainTex, v_Texcoord);
+    color = texture(_MainTex, v_Texcoord);
 #endif
 }
 

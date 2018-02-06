@@ -32,21 +32,23 @@ set(APPLICATION_SOURCE_FILES
 	application.cpp
 	includeglew.hpp
 	definitions.hpp
-        delegate.hpp
-        delegate.cpp
+    delegate.hpp
+    delegate.cpp
 )
 
 set(ENGINE_SOURCE_FILES
 	ecs.hpp
 	ecs.cpp
+	rect.hpp
+	rect.cpp
 	scene.hpp
 	scene.cpp
 	logic.hpp
 	logic.cpp
 	transform.hpp
 	transform.cpp
-        assetdatabase.hpp
-        assetdatabase.cpp
+	assetdatabase.hpp
+    assetdatabase.cpp
 )
 
 set(SOURCE_FILES

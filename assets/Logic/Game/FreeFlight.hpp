@@ -1,10 +1,10 @@
 #pragma once
 
-#include "logic.hpp"
-
 #include <windows.h>
-#include "util.hpp"
 #include <sstream>
+
+#include "logic.hpp"
+#include "util.hpp"
 
 class FreeFlight : public LogicComponent
 {
