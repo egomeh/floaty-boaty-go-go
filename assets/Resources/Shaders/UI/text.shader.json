@@ -1,0 +1,7 @@
+{
+    "type": "shader",
+    "name": "text",
+    "blend": "off",
+    "vertex": "text.vertex",
+    "fragment": "text.fragment"
+}

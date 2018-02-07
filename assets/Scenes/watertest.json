@@ -53,6 +53,25 @@
                     "material": "island"
                 }
             ]
+        },
+        {
+            "name": "Text test",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 2, 0],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "TextDisplay",
+                    "m_DisplayText": "Floaty Boaty Go Go!"
+                },
+                {
+                    "type": "Rotator",
+                    "speed": 90
+                }
+            ]
         }
     ]
 }

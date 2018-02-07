@@ -12,6 +12,7 @@
 #include "Logic/Game/FreeFlight.hpp"
 #include "Logic/Environment/Water.hpp"
 #include "Logic/Effects/PostProcess/FXAA.hpp"
+#include "Logic/Test/TextDisplay.hpp"
 #include "Logic/Game/PlayerControls.hpp"
 #include "Logic/Game/ShipMovement.hpp"
 #include "Logic/Effects/Rotator.hpp"
@@ -121,6 +122,17 @@ public:
     FXAA *CreatePointer(const nlohmann::json &serializedComponent) override;
 };
 
+class TextDisplayLogicFactory : public LogicComponentFactory<TextDisplay>
+{
+public:
+    TextDisplayLogicFactory() : LogicComponentFactory<TextDisplay>()
+    {
+    }
+
+    TextDisplay *CreatePointer() override;
+    TextDisplay *CreatePointer(const nlohmann::json &serializedComponent) override;
+};
+
 class PlayerControlsLogicFactory : public LogicComponentFactory<PlayerControls>
 {
 public:
@@ -209,6 +221,7 @@ struct LogicComponentFactories
     FreeFlightLogicFactory m_FreeFlightLogicFactory;
     WaterLogicFactory m_WaterLogicFactory;
     FXAALogicFactory m_FXAALogicFactory;
+    TextDisplayLogicFactory m_TextDisplayLogicFactory;
     PlayerControlsLogicFactory m_PlayerControlsLogicFactory;
     ShipMovementLogicFactory m_ShipMovementLogicFactory;
     RotatorLogicFactory m_RotatorLogicFactory;

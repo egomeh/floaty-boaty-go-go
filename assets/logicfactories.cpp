@@ -145,6 +145,22 @@ FXAA *FXAALogicFactory::CreatePointer(const nlohmann::json &serializedComponent)
     return component;
 }
 
+TextDisplay *TextDisplayLogicFactory::CreatePointer()
+{
+    return new TextDisplay();
+}
+
+TextDisplay *TextDisplayLogicFactory::CreatePointer(const nlohmann::json &serializedComponent)
+{
+    TextDisplay* component = new TextDisplay();
+
+    JsonSerializer serializer(serializedComponent);
+
+    component->Deserialize(serializer);
+
+    return component;
+}
+
 PlayerControls *PlayerControlsLogicFactory::CreatePointer()
 {
     return new PlayerControls();
@@ -270,6 +286,7 @@ void RegisterLogicFactories(LogicSystem &logicSystem)
     logicSystem.RegisterFactory<FreeFlight>("FreeFlight", &g_LogicComponentFactories.m_FreeFlightLogicFactory);
     logicSystem.RegisterFactory<Water>("Water", &g_LogicComponentFactories.m_WaterLogicFactory);
     logicSystem.RegisterFactory<FXAA>("FXAA", &g_LogicComponentFactories.m_FXAALogicFactory);
+    logicSystem.RegisterFactory<TextDisplay>("TextDisplay", &g_LogicComponentFactories.m_TextDisplayLogicFactory);
     logicSystem.RegisterFactory<PlayerControls>("PlayerControls", &g_LogicComponentFactories.m_PlayerControlsLogicFactory);
     logicSystem.RegisterFactory<ShipMovement>("ShipMovement", &g_LogicComponentFactories.m_ShipMovementLogicFactory);
     logicSystem.RegisterFactory<Rotator>("Rotator", &g_LogicComponentFactories.m_RotatorLogicFactory);
