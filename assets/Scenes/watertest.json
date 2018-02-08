@@ -66,10 +66,28 @@
                 {
                     "type": "TextDisplay",
                     "m_DisplayText": "Floaty Boaty Go Go!"
-                },
+                }
+            ],
+            "entities":
+            [
                 {
-                    "type": "Rotator",
-                    "speed": 90
+                    "name": "Text test mirror",
+                    "components":
+                    [
+                        {
+                            "type": "transform",
+                            "position": [0, 8, 0],
+                            "rotation": [0, 170, 0]
+                        },
+                        {
+                            "type": "TextDisplay",
+                            "m_DisplayText": "Floaty Boaty Go Go!"
+                        },
+                        {
+                            "type": "Rotator",
+                            "speed": 30
+                        }
+                    ]
                 }
             ]
         }

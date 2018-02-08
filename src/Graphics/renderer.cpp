@@ -188,11 +188,14 @@ void OpenGLRenderer::Render()
     GL_ERROR_CHECK();
 
     // This should not be hard-coded, but should be derived from the material/shader in use
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    GL_ERROR_CHECK();
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // GL_ERROR_CHECK();
 
-    // Disable depth buffer writing for transparent objects
+    // Disable depth buffer writing for overlay objects
     m_OpenGLState.DisableDepthTest();
+
+    // Disable face culling for overlay objects
+    m_OpenGLState.DisableFaceCulling();
 
     for (; renderIterator != renderers.end(); ++renderIterator)
     {
@@ -228,6 +231,8 @@ void OpenGLRenderer::Render()
         BindAndPrepareShader(material);
 
         SetDefaultUniforms(*renderIterator->material);
+
+        SetDrawBlendMode(renderIterator->material->GetBlendMode());
 
         renderIterator->mesh->Bind();
         renderIterator->mesh->Draw();

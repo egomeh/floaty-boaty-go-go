@@ -164,7 +164,9 @@ public:
     const UniformPropertySet &GetUniformContext() const;
 
     void SetShader(const Shader *p_Shader);
+
     void SetBlendMode(ShaderBlendMode blendMode);
+    ShaderBlendMode GetBlendMode() const;
 
     void UpdateShaderVariableMaps();
 

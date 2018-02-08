@@ -25,12 +25,18 @@ const UniformPropertySet & Material::GetUniformContext() const
 void Material::SetShader(const Shader *p_Shader)
 {
     m_Shader = p_Shader;
+    m_RenderQueue = m_Shader->GetRenderQueue();
     m_UniformProperties = UniformPropertySet(m_Shader->GetUniforms());
 }
 
 void Material::SetBlendMode(ShaderBlendMode blendMode)
 {
     m_ShaderBlendMode = blendMode;
+}
+
+ShaderBlendMode Material::GetBlendMode() const
+{
+    return m_ShaderBlendMode;
 }
 
 void Material::UpdateShaderVariableMaps()

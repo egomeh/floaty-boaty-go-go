@@ -52,7 +52,7 @@ void FontTexture::GenerateFontTexture(Font *font, unsigned int textureSize, floa
     for (glm::vec4 &pixel : pixels)
     {
         const float pixelValue = static_cast<float>(atlasData.get()[iterator] / 255.f);
-        pixel = glm::vec4(pixelValue, pixelValue, pixelValue, 1.f);
+        pixel = glm::vec4(1.f, 1.f, 1.f, pixelValue);
         ++iterator;
     }
 

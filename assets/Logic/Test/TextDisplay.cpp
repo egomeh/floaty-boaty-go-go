@@ -12,9 +12,9 @@ void TextDisplay::Start()
 
     FontTexture *fontTexture = m_AssetDatabase->RequestAsset<FontTexture>("default");
     m_Material.SetShader(m_AssetDatabase->RequestAsset<Shader>("text"));
-    m_Material.SetBlendMode(ShaderBlendMode::Off);
+    m_Material.SetBlendMode(ShaderBlendMode::Alpha);
 
-    m_Material.GetUniformContext().SetTexture(std::hash<std::string>()("_Albedo"), fontTexture->GetTexture());
+    m_Material.GetUniformContext().SetTexture(std::hash<std::string>()("_TextureAtlas"), fontTexture->GetTexture());
 
     fontTexture->GenerateTextMesh(m_Mesh, m_DisplayText);
 
@@ -22,6 +22,7 @@ void TextDisplay::Start()
 
     meshRenderer->mesh = &m_Mesh;
     meshRenderer->material = &m_Material;
+    meshRenderer->renderQueue = RenderQueue::Overlay;
 
     DebugLog("Yaw!");
 }
