@@ -8,6 +8,7 @@ public:
     Rotator();
 
     void Update() override;
+    void Start() override;
 
     template<typename SerializerType>
     void Deserialize(SerializerType serializer)

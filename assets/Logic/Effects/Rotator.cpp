@@ -9,6 +9,12 @@ Rotator::Rotator()
     speed = 1.0f;
 }
 
+void Rotator::Start()
+{
+    Transform *transform = GetComponent<Transform>();
+    rotation = transform->GetLocalEulerAngles().y;
+}
+
 void Rotator::Update()
 {
     Transform *transform = GetComponent<Transform>();
