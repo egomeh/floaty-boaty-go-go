@@ -46,6 +46,7 @@ public:
     BasicMeshAttribute(AttributeType type, std::size_t valuesPerElement) : m_Type(type), m_ValuesPerElement(valuesPerElement) {}
 
     virtual const void *GetData() const override { return m_Data.data(); }
+    virtual const T &Getelement(std::size_t index) const { return m_Data[index]; }
     virtual std::size_t GetElementSize() const override { return sizeof(T); }
     virtual std::size_t GetQuantity() const override { return m_Data.size(); }
     virtual std::size_t GetValuesPerElement() const { return m_ValuesPerElement; };
@@ -78,6 +79,9 @@ public:
     void GenerateDeviceBuffers();
     void DeleteDeviceBuffers();
 
+    void SetBounds(glm::vec3 bounds);
+    const glm::vec3 &GetBounds() const;
+
     std::size_t GetRenderCount() const;
     void Draw() const;
 
@@ -90,4 +94,6 @@ private:
     GLuint m_VertexArrayObject;
     std::vector<GLuint> m_VertexBufferObjects;
     GLuint m_IndexBufferObject;
+
+    glm::vec3 m_Size;
 };

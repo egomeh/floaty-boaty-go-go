@@ -142,6 +142,16 @@ void Mesh::DeleteDeviceBuffers()
     m_HasDeviceBuffers = false;
 }
 
+void Mesh::SetBounds(glm::vec3 bounds)
+{
+    m_Size = bounds;
+}
+
+const glm::vec3 &Mesh::GetBounds() const
+{
+    return m_Size;
+}
+
 std::size_t Mesh::GetRenderCount() const
 {
     return m_Indecies.size();
@@ -154,7 +164,6 @@ void Mesh::Draw() const
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)0);
     GL_ERROR_CHECK();
 }
-
 
 GLenum MeshAttribute::AttributeTypeTpoGLType(AttributeType type)
 {
