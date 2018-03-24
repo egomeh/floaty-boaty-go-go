@@ -10,18 +10,15 @@ public:
     TurbulenceWobble();
 
     void Update() override;
+    void Start() override;
 
     template<typename SerializerType>
     void Deserialize(SerializerType serializer)
     {
         DESERIALIZE(m_WobbleTime, serializer);
-
-        PickRandomDisplacement();
     }
 
 private:
-
-    void PickRandomDisplacement();
 
     glm::vec3 m_OldWobbleAngle;
     glm::vec3 m_OldDisplacement;
@@ -31,6 +28,9 @@ private:
 
     float m_WobbleProgress;
     float m_WobbleTime;
+
+    // A random number used to mix int the noise pattern when wobbling.
+    float m_RandomNumberFromStart;
 
     std::mt19937 rng;
 };

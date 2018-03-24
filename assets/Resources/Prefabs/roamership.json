@@ -33,7 +33,7 @@
                 },
                 {
                     "type": "TurbulenceWobble",
-                    "m_WobbleTime": 1.0
+                    "m_WobbleTime": 5.0
                 },
                 {
                     "type": "MeshRandomizer",
