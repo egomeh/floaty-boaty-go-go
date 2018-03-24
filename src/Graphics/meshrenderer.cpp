@@ -166,6 +166,8 @@ void MeshRenderSystem::EnsureComponentOrder()
         return;
     }
 
+    // First check if the current order of components are correct.
+
     // i is the component being inspected currently
     for (int i = 0; i < m_Components.size() - 1; ++i)
     {
@@ -201,6 +203,8 @@ void MeshRenderSystem::EnsureComponentOrder()
     }
 
     // The ordering is not correct, perform expensive and comprehensive reordering
+    // This is a slow way to sort the components, but happens only when a new component is
+    // added and is in the incorrect order.
     // i is the component being inspected currently
     for (int i = 0; i < m_Components.size() - 1; ++i)
     {
