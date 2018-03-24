@@ -187,10 +187,6 @@ void OpenGLRenderer::Render()
     glEnable(GL_BLEND);
     GL_ERROR_CHECK();
 
-    // This should not be hard-coded, but should be derived from the material/shader in use
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    // GL_ERROR_CHECK();
-
     // Disable depth buffer writing for overlay objects
     m_OpenGLState.DisableDepthTest();
 
