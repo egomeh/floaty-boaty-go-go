@@ -13,6 +13,13 @@ void PlayerControls::Update()
     if (Input::KeyPressed('u'))
     {
         m_ControlsEnabled = !m_ControlsEnabled;
+
+        if (!m_ControlsEnabled)
+        {
+            ShipMovement *movementController = GetComponent<ShipMovement>();
+            movementController->SetThrottle(0.f);
+            movementController->SetTurn(0.f);
+        }
     }
 
     FreeFlight *freeFlight = m_EntityDatabase->GetComponent<FreeFlight>(m_CameraHandle);
