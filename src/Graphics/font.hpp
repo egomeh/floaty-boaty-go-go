@@ -15,6 +15,13 @@ enum class FontTextureType
     MultiChannelSignedDistanceField, // Not implemented
 };
 
+enum class TextAlign
+{
+    Left,
+    Center,
+    Right
+};
+
 class GlyphInfo
 {
 public:
@@ -57,7 +64,7 @@ public:
 
     GlyphInfo GetGlyphInfo(uint32_t character, float offsetX, float offsetY) const;
 
-    void GenerateTextMesh(Mesh &mesh, const std::string &text);
+    void GenerateTextMesh(Mesh &mesh, const std::string &text, TextAlign alignment);
 
 private:
     Texture2D *m_FontTexture;

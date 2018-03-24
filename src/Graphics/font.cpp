@@ -95,7 +95,7 @@ GlyphInfo FontTexture::GetGlyphInfo(uint32_t character, float offsetX, float off
     return glyphInfo;
 }
 
-void FontTexture::GenerateTextMesh(Mesh &mesh, const std::string &text)
+void FontTexture::GenerateTextMesh(Mesh &mesh, const std::string &text, TextAlign alignment)
 {
     // Clear the mesh in case it was already populated
     mesh.ClearIndecies();
@@ -106,8 +106,16 @@ void FontTexture::GenerateTextMesh(Mesh &mesh, const std::string &text)
     std::shared_ptr<BasicMeshAttribute<glm::vec2>> texcoordAttribute = std::make_shared<BasicMeshAttribute<glm::vec2>>(Float, 2);
     std::vector<unsigned int> indicies;
 
+    std::vector<glm::vec3> positions;
+    std::vector<glm::vec2> texturecoords;
+
     float offsetX = 0.f;
     float offsetY = 0.f;
+
+    // Bounds for the font mesh
+    bool firstGlyph = true;
+    glm::vec3 lowerCorner;
+    glm::vec3 upperCorner;
 
     unsigned int index = 0;
 
@@ -117,25 +125,40 @@ void FontTexture::GenerateTextMesh(Mesh &mesh, const std::string &text)
 
         GlyphInfo glyphInfo = GetGlyphInfo(character, offsetX, offsetY);
 
+        // Fill in the quad for the glyph.
         glm::vec3 upperLeftCorner = glm::vec3(glyphInfo.GetPosiition().GetUpperLeftCorner(), 0.f);
         glm::vec3 upperRightCorner = glm::vec3(glyphInfo.GetPosiition().GetUpperRightCorner(), 0.f);
         glm::vec3 lowerLeftCorner = glm::vec3(glyphInfo.GetPosiition().GetLowerLeftCorner(), 0.f);
         glm::vec3 lowerRightCorner = glm::vec3(glyphInfo.GetPosiition().GetLowerRightCorner(), 0.f);
 
+        // Update the upper and lower heights of the letters.
+        if (firstGlyph)
+        {
+            firstGlyph = false;
+            lowerCorner.y = lowerLeftCorner.y;
+            upperCorner.y = upperRightCorner.y;
+        }
+        else
+        {
+            lowerCorner.y = std::min(lowerCorner.y, lowerLeftCorner.y);
+            upperCorner.y = std::max(upperCorner.y, upperRightCorner.y);
+        }
+
+        // Fill in the texture coordinates for the glyph.
         glm::vec2 upperLeftTexcoord = glyphInfo.GetTexcoords().GetUpperLeftCorner();
         glm::vec2 upperRightTexcoord = glyphInfo.GetTexcoords().GetUpperRightCorner();
         glm::vec2 lowerLeftTexcoord = glyphInfo.GetTexcoords().GetLowerLeftCorner();
         glm::vec2 lowerRightTexcoord = glyphInfo.GetTexcoords().GetLowerRightCorner();
 
-        positionAttribute->AddData(upperLeftCorner);
-        positionAttribute->AddData(upperRightCorner);
-        positionAttribute->AddData(lowerLeftCorner);
-        positionAttribute->AddData(lowerRightCorner);
+        positions.push_back(upperLeftCorner);
+        positions.push_back(upperRightCorner);
+        positions.push_back(lowerLeftCorner);
+        positions.push_back(lowerRightCorner);
 
-        texcoordAttribute->AddData(upperLeftTexcoord);
-        texcoordAttribute->AddData(upperRightTexcoord);
-        texcoordAttribute->AddData(lowerLeftTexcoord);
-        texcoordAttribute->AddData(lowerRightTexcoord);
+        texturecoords.push_back(upperLeftTexcoord);
+        texturecoords.push_back(upperRightTexcoord);
+        texturecoords.push_back(lowerLeftTexcoord);
+        texturecoords.push_back(lowerRightTexcoord);
 
         indicies.push_back(index);
         indicies.push_back(index + 1);
@@ -149,6 +172,43 @@ void FontTexture::GenerateTextMesh(Mesh &mesh, const std::string &text)
 
         offsetX = glyphInfo.GetOffset().x;
         offsetY = glyphInfo.GetOffset().y;
+    }
+
+    float alignmentPushbackFactor = .0f;
+    if (alignment == TextAlign::Center)
+    {
+        alignmentPushbackFactor = .5f;
+    }
+    else if (alignment == TextAlign::Right)
+    {
+        alignmentPushbackFactor = 1.0f;
+    }
+
+    // Set the bounds in the x-axis.
+    lowerCorner.x = positions.front().x;
+    upperCorner.x = positions.back().x;
+
+    // The depth is 0 for text meshes.
+    upperCorner.z = 0.0f;
+    lowerCorner.z = 0.0f;
+
+    // Compute and set the bounds in the mesh.
+    glm::vec3 textMeshBounds = upperCorner - lowerCorner;
+    mesh.SetBounds(textMeshBounds);
+
+    for (glm::vec3 &vertex : positions)
+    {
+        vertex.x = vertex.x - textMeshBounds.x * alignmentPushbackFactor;
+    }
+
+    for (const glm::vec3 &vertex : positions)
+    {
+        positionAttribute->AddData(vertex);
+    }
+
+    for (const glm::vec2 &texcoord : texturecoords)
+    {
+        texcoordAttribute->AddData(texcoord);
     }
 
     mesh.SetAttribute(0, positionAttribute);
