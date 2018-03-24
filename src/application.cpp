@@ -1,10 +1,10 @@
 #include "definitions.hpp"
 
-#include <sstream>
 #include <vector>
-#include <algorithm>
 #include <numeric>
+#include <sstream>
 #include <fstream>
+#include <algorithm>
 #include <functional>
 #include <unordered_set>
 
@@ -12,8 +12,8 @@
 
 #include "project_config.h"
 
-#include "application.hpp"
 #include "util.hpp"
+#include "application.hpp"
 
 const wchar_t kClassName[] = L"FloatyBoatyGoGo";
 
