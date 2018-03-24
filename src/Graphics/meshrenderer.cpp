@@ -161,6 +161,11 @@ void MeshRenderSystem::EnsureComponentOrder()
 {
     bool orderIsCorrect = true;
 
+    if (m_Components.size() == 0)
+    {
+        return;
+    }
+
     // i is the component being inspected currently
     for (int i = 0; i < m_Components.size() - 1; ++i)
     {
