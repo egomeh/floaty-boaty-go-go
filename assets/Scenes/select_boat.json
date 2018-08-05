@@ -1,0 +1,107 @@
+{
+    "name" : "select_boat",
+    "type": "scene",
+    "entities":
+    [
+        {
+            "name": "camera",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, 0, -8],
+                    "rotation": [0, 0, 0]
+                },
+                {
+                    "type": "camera",
+                    "fov": 80.0,
+                    "nearPlane": 0.3,
+                    "farPlane": 1000.0,
+                    "cleartypestring": "cubemap",
+                    "skyboxasset": "skybox",
+                    "clearColor": [0.23, 0.75, 0.86, 1.0],
+                    "allowMsaa": true,
+                    "msaaSamples": 4
+                }
+            ],
+            "entities":
+            [
+                {
+                    "name": "Overlay text",
+                    "components":
+                    [
+                        {
+                            "type": "transform",
+                            "position": [0, 15, 30],
+                            "rotation": [0, 180, 0]
+                        },
+                        {
+                            "type": "TextDisplay",
+                            "textAlign" : "center",
+                            "m_DisplayText": "Build your Floaty Boat"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "boat assembly",
+            "components":
+            [
+                {
+                    "type": "transform",
+                    "position": [0, -2, 0],
+                    "rotation": [-2, 165, 0]
+                }
+            ],
+            "entities":
+            [
+                {
+                    "name": "model",
+                    "components":
+                    [
+                        {
+                            "type": "transform",
+                            "position": [0, 0, 0],
+                            "rotation": [0, 0, 0]
+                        },
+                        {
+                            "type": "TurbulenceWobble",
+                            "m_WobbleTime": 5.0
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "End_Nautilus",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Mid_section",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Front_Submarine",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "House_Submarine",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Misc_Tires",
+                            "material": "airship"
+                        },
+                        {
+                            "type": "mesh renderer",
+                            "mesh": "Balloon_Zeppelin",
+                            "material": "balloon_player"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

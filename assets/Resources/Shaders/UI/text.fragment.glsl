@@ -14,5 +14,7 @@ uniform sampler2D _TextureAtlas;
 
 void main()
 {
-    color = texture(_TextureAtlas, v_Texcoord);
+    vec4 rawSample = texture(_TextureAtlas, v_Texcoord);
+    float lowMip = textureLod(_TextureAtlas, v_Texcoord, 3.).r;
+    color = texture(_TextureAtlas, v_Texcoord) * lowMip;
 }
