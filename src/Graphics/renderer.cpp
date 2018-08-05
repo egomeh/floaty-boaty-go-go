@@ -12,7 +12,7 @@
 #include "logic.hpp"
 
 OpenGLRenderer::OpenGLRenderer(OpenGLVersion openGLVersion) :
-    m_GLVerison(openGLVersion), m_MainTarget(1, 1, 24), m_SecondTarget(1, 1, 24)
+    m_GLVerison(openGLVersion), m_MainTarget(1, 1, 24), m_PostProcessSwapChain{RenderTexture(1, 1, 24), RenderTexture(1, 1, 24)}
 {
     glEnable(GL_MULTISAMPLE);
     GL_ERROR_CHECK();
@@ -51,13 +51,18 @@ void OpenGLRenderer::SetViewPort(std::size_t width, std::size_t height)
     m_Height = height;
 
     m_MainTarget.Release();
-    m_SecondTarget.Release();
+    m_PostProcessSwapChain[0].Release();
+    m_PostProcessSwapChain[1].Release();
 
     m_MainTarget = RenderTexture(m_Width, m_Height, 24);
+    // m_MainTarget.SetMultiSamplingLevel(4);
     m_MainTarget.Create();
 
-    m_SecondTarget = RenderTexture(m_Width, m_Height, 24);
-    m_SecondTarget.Create();
+    m_PostProcessSwapChain[0] = RenderTexture(m_Width, m_Height, 24);
+    m_PostProcessSwapChain[0].Create();
+
+    m_PostProcessSwapChain[1] = RenderTexture(m_Width, m_Height, 24);
+    m_PostProcessSwapChain[1].Create();
 }
 
 void OpenGLRenderer::Render()
@@ -240,17 +245,17 @@ void OpenGLRenderer::Render()
     m_OpenGLState.DisableDepthTest();
 
     // Do Post processing
+    unsigned short int swapchainIndex = 0;
 
-    RenderTexture *source = &m_MainTarget;
-    RenderTexture *target = &m_SecondTarget;
+    m_PostProcessSwapChain[swapchainIndex].CopyRenderTexture(m_MainTarget);
 
     for (const PostProcess &postProcess : camera->postProcessHooks)
     {
-        postProcess.logicComponent->OnRenderImage(source, target);
-        std::swap(source, target);
+        postProcess.logicComponent->OnRenderImage(&m_PostProcessSwapChain[swapchainIndex], &m_PostProcessSwapChain[1 - swapchainIndex]);
+        swapchainIndex = 1 - swapchainIndex;
     }
 
-    Blit(source, nullptr);
+    Blit(&m_PostProcessSwapChain[swapchainIndex], nullptr);
 }
 
 std::size_t OpenGLRenderer::GetHeight() const

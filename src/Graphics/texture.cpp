@@ -323,7 +323,12 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
         glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
         GL_ERROR_CHECK();
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+
+        if (m_SamplesPerPixel > 1)
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH_COMPONENT16, width, height);
+        else
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+        
         GL_ERROR_CHECK();
     }
 
@@ -333,7 +338,12 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
         glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
         GL_ERROR_CHECK();
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+
+        if (m_SamplesPerPixel > 1)
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH24_STENCIL8, width, height);
+        else
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+
         GL_ERROR_CHECK();
     }
 
@@ -343,11 +353,17 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
         glBindRenderbuffer(GL_RENDERBUFFER, m_DepthBuffer);
         GL_ERROR_CHECK();
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, width, height);
+
+        if (m_SamplesPerPixel > 1)
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH32F_STENCIL8, width, height);
+        else
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, width, height);
+
         GL_ERROR_CHECK();
     }
 
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_DepthBuffer);
+    GL_ERROR_CHECK();
 
     for (int i = 0; i < m_NumberColorBuffers; ++i)
     {
@@ -356,8 +372,13 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
         glBindTexture(GL_TEXTURE_2D, renderTarget);
         GL_ERROR_CHECK();
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+
+        if (m_SamplesPerPixel > 1)
+            glTexImage2DMultisample(GL_TEXTURE_2D, m_SamplesPerPixel, GL_RGBA16F, width, height, GL_TRUE);
+        else
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
         GL_ERROR_CHECK();
+
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         GL_ERROR_CHECK();
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -415,6 +436,27 @@ GLuint RenderTexture::GetRenderTarget(std::size_t index)
         return m_RenderTargets[index];
     }
     return 0;
+}
+
+bool RenderTexture::CopyRenderTexture(RenderTexture &source)
+{
+    if (m_Width != source.GetWidth())
+    {
+        return false;
+    }
+
+    if (m_Height != source.GetHeight())
+    {
+        return false;
+    }
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, source.GetFramebufferID());
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, GetFramebufferID());
+
+    glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    GL_ERROR_CHECK();
+
+    return true;
 }
 
 Cubemap::Cubemap() : Texture(1, 1)

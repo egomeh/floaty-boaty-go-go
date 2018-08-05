@@ -111,6 +111,8 @@ public:
 
     GLuint GetRenderTarget(std::size_t index);
 
+    bool CopyRenderTexture(RenderTexture &source);
+
 private:
     GLuint m_FramebufferID;
     std::size_t m_NumberColorBuffers;

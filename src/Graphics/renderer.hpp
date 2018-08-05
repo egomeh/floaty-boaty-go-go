@@ -86,7 +86,7 @@ private:
     std::shared_ptr<Material> m_SkyboxMaterial;
 
     RenderTexture m_MainTarget;
-    RenderTexture m_SecondTarget;
+    RenderTexture m_PostProcessSwapChain[2];
 
     CameraSystem m_CameraSystem;
     MeshRenderSystem m_MeshRenderSystem;
