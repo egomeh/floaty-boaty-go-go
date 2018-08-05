@@ -370,11 +370,14 @@ void RenderTexture::Create()
         GLuint renderTarget;
         glGenTextures(1, &renderTarget);
         GL_ERROR_CHECK();
-        glBindTexture(GL_TEXTURE_2D, renderTarget);
+        if (m_SamplesPerPixel > 1)
+            glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, renderTarget);
+        else
+            glBindTexture(GL_TEXTURE_2D, renderTarget);
         GL_ERROR_CHECK();
 
         if (m_SamplesPerPixel > 1)
-            glTexImage2DMultisample(GL_TEXTURE_2D, m_SamplesPerPixel, GL_RGBA16F, width, height, GL_TRUE);
+            glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_SamplesPerPixel, GL_RGBA16F, width, height, GL_TRUE);
         else
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
         GL_ERROR_CHECK();
@@ -385,7 +388,10 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
         m_RenderTargets.push_back(renderTarget);
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, renderTarget, 0);
+        if (m_SamplesPerPixel > 1)
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D_MULTISAMPLE, renderTarget, 0);
+        else
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, renderTarget, 0);
         GL_ERROR_CHECK();
     }
 

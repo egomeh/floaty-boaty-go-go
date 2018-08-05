@@ -55,7 +55,7 @@ void OpenGLRenderer::SetViewPort(std::size_t width, std::size_t height)
     m_PostProcessSwapChain[1].Release();
 
     m_MainTarget = RenderTexture(m_Width, m_Height, 24);
-    // m_MainTarget.SetMultiSamplingLevel(4);
+    m_MainTarget.SetMultiSamplingLevel(4);
     m_MainTarget.Create();
 
     m_PostProcessSwapChain[0] = RenderTexture(m_Width, m_Height, 24);
