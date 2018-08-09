@@ -316,6 +316,7 @@ void RenderTexture::Create()
 
     GLsizei width = static_cast<GLsizei>(m_Width);
     GLsizei height = static_cast<GLsizei>(m_Height);
+    GLsizei multisampleCount = static_cast<GLsizei>(m_SamplesPerPixel);
 
     if (m_DepthBits == 16)
     {
@@ -325,7 +326,7 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
 
         if (m_SamplesPerPixel > 1)
-            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH_COMPONENT16, width, height);
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, multisampleCount, GL_DEPTH_COMPONENT16, width, height);
         else
             glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
         
@@ -340,7 +341,7 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
 
         if (m_SamplesPerPixel > 1)
-            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH24_STENCIL8, width, height);
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, multisampleCount, GL_DEPTH24_STENCIL8, width, height);
         else
             glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 
@@ -355,7 +356,7 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
 
         if (m_SamplesPerPixel > 1)
-            glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_SamplesPerPixel, GL_DEPTH32F_STENCIL8, width, height);
+            glRenderbufferStorageMultisample(GL_RENDERBUFFER, multisampleCount, GL_DEPTH32F_STENCIL8, width, height);
         else
             glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, width, height);
 
@@ -377,7 +378,7 @@ void RenderTexture::Create()
         GL_ERROR_CHECK();
 
         if (m_SamplesPerPixel > 1)
-            glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, m_SamplesPerPixel, GL_RGBA16F, width, height, GL_TRUE);
+            glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, multisampleCount, GL_RGBA16F, width, height, GL_TRUE);
         else
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
         GL_ERROR_CHECK();
@@ -459,7 +460,10 @@ bool RenderTexture::CopyRenderTexture(RenderTexture &source)
     glBindFramebuffer(GL_READ_FRAMEBUFFER, source.GetFramebufferID());
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, GetFramebufferID());
 
-    glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    GLsizei width = static_cast<GLsizei>(m_Width);
+    GLsizei height = static_cast<GLsizei>(m_Height);
+
+    glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     GL_ERROR_CHECK();
 
     return true;
