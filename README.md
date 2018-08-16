@@ -6,33 +6,23 @@ A small game written in C++ using OpenGL for rendering.
 
 ## About
 
-Floaty Boaty Go Go is a result of a 3-week project that was an assignment for
-programmers participatig in the [DADIU](http://www.dadiu.dk/) programme.
-Durig this game development course, all game progammers were asked to author
-a a game without use of a game engine. In my case I chose to built what became
-_Floaty Boaty Go Go_. The project was developed beyond the 3 weeks alloted
-for the project.
+Floaty Boaty Go Go is a result of a 3-week project that was an assignment for programmers participating in the DADIU programme. Durig this game development course, all game programmers were asked to author a game without the use of a game engine. In my case, I chose to build what became Floaty Boaty Go Go. The project was scheduled to take three weeks, but this has exceeded that time frame.
 
-In the game, the player controls an airship and must fight other airships
-controlled by a simple AI. The game is mostly used to explore how
-to write a code base that facilitates a somewhat good asset pipeline
-and how to make a flexible system that can be used to build possibly not just
-one single game or game type.
+In the game, the player controls an airship and must fight other airships controlled by a simple AI. The game is mostly used to explore how to write a code base that facilitates a somewhat good asset pipeline and how to make a flexible system that can be used to build possibly not just one single game or game type.
 
 ## Architecture
 
-At the core of the game an [ECS](ECS) patteren is applied.
-With such a pattern, each entity is by itself only an id without any behavior
-or functionality. Different logic and presence of the entites are added
+The core architecture of the games draws inspiration from the [ECS](ECS) pattern. With such a pattern, each entity is by itself only an id without any behavior
+or functionality. Different logic and presence of the entities manifest
 via components. This way, entities can change what they are and what they
 are capable of at runtime.
 
-The [ECS](ECS) pattern is implemented to give each component an esay interface
+The [ECS](ECS) pattern is implemented to give each component an easy interface
 to access other components. An example of this is the `AIControls` interacting
 with the `ShipMovement`. The `ShipMovement` is the component that moves
-each ship determining speed, height etc. The `AIControls` components
-implements an AI hardly worthy of it's title, that simply moves forwards
-until reacging the center of the map where is stops. The update loop for the
+each ship determining speed, height, and similar properties. The `AIControls` components
+implement an AI hardly worthy of its title, which moves forwards
+until reaching the center of the map where it stops. The update loop for the
 `AIControls` is as follows:
 
 ```
@@ -59,14 +49,14 @@ on the same entity, and interact with them.
 
 ## Assets
 
-All game specific assets (icluding) code is located in the _assets_ folder.
+All game specific assets (including) code is located in the _assets_ folder.
 Before runtime, a python script (`AssetDatabaseBuilder.py`) walks through
 the _assets_ folder and compiles a _JSON_ file that maps all asset types
 to paths for some assets, creates a _meta_ file that contains information
-on how assets should be loaded at runtime.
+on how assets are at runtime.
 
-Some assets must be manually written in _JSON_ format. As an example,
-`material` assets must be written in _JSON_ format manually, an exmaple
+Some assets must are written by hand in _JSON_ format. As an example,
+`material` assets must be written in _JSON_ format manually, an example
 is as follows:
 
 ```
@@ -82,18 +72,14 @@ is as follows:
 }
 ```
 
-Here, one identifies the type and name, which must be present for the asset database
-script to pick it up. then, a shader is specified along with a list of uniforms
-the material should set on the given shsader.
+Here, one identifies the type and name of the material, which must be present for the asset database.
+Script to pick it up. Then, the materail specifies a shader along with a list of uniforms.
 
-The assetdatabase can in a certain build configuration monitor changes in the
+The asset database can in a particular build configuration monitor changes in the
 _asset_ folder, and keep track of which assets depends on which files.
-If asset tracking is enabled, assets may be changed at runtime. This has so far
-provem to be useful for sahders and textures.
+If asset tracking is enabled, assets may change at runtime. Swapping assets at runtime has so far proven to be useful for shaders and textures.
 
-An exmaple of a material changing texture to a missing texture and back to the
-original can be seen below.
-
+Below is an example of a material that changes from a missing texture to back to the original existing texture.
 <p align="center">
 <img src="img/missingtexture.gif"/>
 </p>
