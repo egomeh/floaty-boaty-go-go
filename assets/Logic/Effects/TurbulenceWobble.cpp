@@ -22,6 +22,7 @@ void TurbulenceWobble::Start()
     std::default_random_engine generator;
     std::uniform_real_distribution<float> distribution(0.f, 1.f);
     m_RandomNumberFromStart = distribution(generator);
+    m_WobbleProgress = 0.f;
 }
 
 void TurbulenceWobble::Update()
